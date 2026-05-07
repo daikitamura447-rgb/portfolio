@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>みどり整骨院 | 地域密着・根本改善</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #2d5a3d;
+  --green-light: #4a7c5e;
+  --green-pale: #e8f0eb;
+  --cream: #faf8f3;
+  --warm: #f5f0e8;
+  --text: #1a1a1a;
+  --muted: #6b6b6b;
+  --accent: #c8a96e;
+  --white: #ffffff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans JP', sans-serif; color: var(--text); background: var(--cream); overflow-x: hidden; }
+
+/* HEADER */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(250,248,243,0.95); backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(45,90,61,0.12);
+  padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-mark { width: 36px; height: 36px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.logo-mark span { color: white; font-size: 16px; font-family: 'Shippori Mincho', serif; font-weight: 700; }
+.logo-text { font-family: 'Shippori Mincho', serif; font-size: 18px; font-weight: 600; color: var(--green); }
+.logo-sub { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+nav { display: flex; gap: 24px; align-items: center; }
+nav a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.5px; transition: color .2s; }
+nav a:hover { color: var(--green); }
+.tel-btn { background: var(--green); color: white; padding: 8px 18px; border-radius: 24px; font-size: 13px; font-weight: 500; text-decoration: none; letter-spacing: 0.5px; transition: background .2s; }
+.tel-btn:hover { background: var(--green-light); color: white; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.hamburger span { width: 22px; height: 2px; background: var(--green); border-radius: 2px; display: block; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3d2a 0%, #2d5a3d 50%, #3d7a54 100%);
+  display: flex; align-items: center;
+  padding: 80px 24px 60px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: .4;
+}
+.hero-inner { max-width: 900px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
+.hero-badge { display: inline-block; background: rgba(200,169,110,0.2); border: 1px solid var(--accent); color: var(--accent); font-size: 12px; letter-spacing: 2px; padding: 6px 16px; border-radius: 24px; margin-bottom: 28px; }
+.hero h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(36px, 8vw, 68px); font-weight: 700; color: white; line-height: 1.25; margin-bottom: 24px; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p { font-size: clamp(14px, 3vw, 17px); color: rgba(255,255,255,0.78); line-height: 1.9; max-width: 520px; margin-bottom: 40px; font-weight: 300; }
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-primary { background: var(--accent); color: #1a1a1a; padding: 14px 32px; border-radius: 32px; font-size: 15px; font-weight: 700; text-decoration: none; letter-spacing: 0.5px; transition: all .2s; display: inline-block; }
+.btn-primary:hover { background: #dabb80; transform: translateY(-1px); }
+.btn-outline { border: 2px solid rgba(255,255,255,0.5); color: white; padding: 13px 30px; border-radius: 32px; font-size: 15px; font-weight: 500; text-decoration: none; transition: all .2s; display: inline-block; }
+.btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
+.hero-scroll { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 2px; animation: bounce 2s infinite; }
+.hero-scroll::after { content: ''; width: 1px; height: 40px; background: rgba(255,255,255,0.3); }
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+/* SECTION COMMON */
+section { padding: 80px 24px; }
+.section-inner { max-width: 900px; margin: 0 auto; }
+.section-label { font-size: 11px; letter-spacing: 3px; color: var(--green); text-transform: uppercase; margin-bottom: 12px; font-weight: 500; }
+.section-title { font-family: 'Shippori Mincho', serif; font-size: clamp(26px, 5vw, 42px); font-weight: 700; line-height: 1.4; margin-bottom: 16px; }
+.section-desc { font-size: 15px; color: var(--muted); line-height: 1.9; max-width: 600px; }
+
+/* ISSUES */
+.issues { background: var(--warm); }
+.issue-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 48px; }
+.issue-card { background: white; border-radius: 16px; padding: 24px; border: 1px solid rgba(0,0,0,0.06); transition: transform .2s, box-shadow .2s; }
+.issue-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+.issue-icon { font-size: 32px; margin-bottom: 14px; }
+.issue-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.issue-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* FEATURES */
+.features { background: var(--green); }
+.features .section-label { color: var(--accent); }
+.features .section-title { color: white; }
+.features .section-desc { color: rgba(255,255,255,0.7); }
+.feature-list { margin-top: 48px; display: flex; flex-direction: column; gap: 1px; }
+.feature-item { background: rgba(255,255,255,0.06); padding: 24px 28px; display: flex; gap: 20px; align-items: flex-start; border-radius: 4px; transition: background .2s; }
+.feature-item:hover { background: rgba(255,255,255,0.1); }
+.feature-num { font-family: 'Shippori Mincho', serif; font-size: 36px; color: var(--accent); font-weight: 700; line-height: 1; min-width: 48px; }
+.feature-content { }
+.feature-title { font-size: 18px; font-weight: 700; color: white; margin-bottom: 8px; }
+.feature-desc { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.8; }
+
+/* MENU */
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 48px; }
+.menu-card { background: white; border-radius: 16px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06); transition: transform .2s, box-shadow .2s; }
+.menu-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+.menu-color { height: 6px; }
+.menu-color-1 { background: linear-gradient(90deg, #2d5a3d, #4a7c5e); }
+.menu-color-2 { background: linear-gradient(90deg, #c8a96e, #e0c080); }
+.menu-color-3 { background: linear-gradient(90deg, #5a7a8a, #7a9aaa); }
+.menu-body { padding: 24px; }
+.menu-icon { font-size: 28px; margin-bottom: 12px; }
+.menu-name { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.menu-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+.menu-price { font-family: 'Shippori Mincho', serif; font-size: 22px; font-weight: 700; color: var(--green); }
+.menu-price span { font-size: 13px; font-family: 'Noto Sans JP', sans-serif; color: var(--muted); font-weight: 400; }
+
+/* VOICE */
+.voice { background: var(--green-pale); }
+.voice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 48px; }
+.voice-card { background: white; border-radius: 16px; padding: 24px; border: 1px solid rgba(45,90,61,0.1); }
+.stars { color: var(--accent); font-size: 16px; margin-bottom: 12px; letter-spacing: 2px; }
+.voice-text { font-size: 14px; line-height: 1.85; color: var(--text); margin-bottom: 16px; }
+.voice-author { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+/* INFO */
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 48px; align-items: start; }
+.info-table { width: 100%; border-collapse: collapse; }
+.info-table tr { border-bottom: 1px solid rgba(0,0,0,0.07); }
+.info-table tr:last-child { border-bottom: none; }
+.info-table th { font-size: 13px; font-weight: 500; color: var(--green); padding: 14px 12px 14px 0; white-space: nowrap; text-align: left; width: 100px; }
+.info-table td { font-size: 13px; color: var(--text); padding: 14px 0; line-height: 1.6; }
+.map-placeholder { background: #d8e8d8; border-radius: 12px; height: 260px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; color: var(--green); font-size: 14px; border: 2px dashed rgba(45,90,61,0.3); }
+
+/* CONTACT */
+.contact { background: var(--green); }
+.contact .section-title { color: white; }
+.contact .section-desc { color: rgba(255,255,255,0.7); }
+.contact-box { background: white; border-radius: 20px; padding: 40px; margin-top: 40px; }
+.form-row { margin-bottom: 20px; }
+.form-label { font-size: 13px; font-weight: 500; margin-bottom: 8px; display: block; }
+.form-label .req { color: #e05555; font-size: 11px; margin-left: 6px; }
+.form-input, .form-select, .form-textarea {
+  width: 100%; padding: 12px 16px; border: 1.5px solid #e0e0e0; border-radius: 10px;
+  font-size: 14px; font-family: 'Noto Sans JP', sans-serif; color: var(--text);
+  background: var(--cream); outline: none; transition: border-color .2s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--green); }
+.form-textarea { height: 120px; resize: vertical; }
+.form-submit { width: 100%; background: var(--green); color: white; border: none; padding: 16px; border-radius: 32px; font-size: 16px; font-weight: 700; font-family: 'Noto Sans JP', sans-serif; cursor: pointer; letter-spacing: 1px; transition: background .2s; margin-top: 8px; }
+.form-submit:hover { background: var(--green-light); }
+.tel-large { text-align: center; margin-top: 32px; padding-top: 32px; border-top: 1px solid #eee; }
+.tel-large p { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.tel-number { font-family: 'Shippori Mincho', serif; font-size: 36px; font-weight: 700; color: var(--green); letter-spacing: 2px; }
+.tel-hours { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+/* FOOTER */
+footer { background: #111; color: rgba(255,255,255,0.5); text-align: center; padding: 32px 24px; font-size: 12px; }
+footer strong { color: rgba(255,255,255,0.8); font-size: 16px; font-family: 'Shippori Mincho', serif; }
+
+/* FADE IN */
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* MOBILE */
+@media (max-width: 640px) {
+  nav { display: none; }
+  .hamburger { display: flex; }
+  .hero h1 { font-size: 36px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .feature-item { flex-direction: column; gap: 8px; }
+  .feature-num { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-mark"><span>整</span></div>
+    <div>
+      <div class="logo-text">みどり整骨院</div>
+      <div class="logo-sub">MIDORI SEIKOTSU-IN</div>
+    </div>
+  </div>
+  <nav>
+    <a href="#issues">お悩み</a>
+    <a href="#features">当院の特徴</a>
+    <a href="#menu">メニュー</a>
+    <a href="#voice">口コミ</a>
+    <a href="#info">アクセス</a>
+    <a href="#contact" class="tel-btn">予約・お問い合わせ</a>
+  </nav>
+  <div class="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">○○市 地域密着 整骨院</div>
+    <h1>痛みの<em>根本</em>から<br>向き合う整骨院</h1>
+    <p>「また痛くなった」を繰り返さないために。<br>一人ひとりの身体と丁寧に向き合い、根本改善を目指します。</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">無料相談・予約はこちら</a>
+      <a href="#menu" class="btn-outline">施術メニューを見る</a>
+    </div>
+  </div>
+  <div class="hero-scroll">SCROLL</div>
+</section>
+
+<!-- ISSUES -->
+<section class="issues" id="issues">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-label">Your Problems</div>
+      <h2 class="section-title">こんなお悩みありませんか？</h2>
+      <p class="section-desc">多くの方が抱える体の悩みに、私たちは真剣に取り組んでいます。</p>
+    </div>
+    <div class="issue-grid">
+      <div class="issue-card fade-in">
+        <div class="issue-icon">😔</div>
+        <div class="issue-title">肩こり・首こりがひどい</div>
+        <div class="issue-desc">デスクワークやスマホの使いすぎで、慢性的な肩こりに悩んでいる</div>
+      </div>
+      <div class="issue-card fade-in">
+        <div class="issue-icon">🙏</div>
+        <div class="issue-title">腰痛が続いている</div>
+        <div class="issue-desc">仕事や日常生活での腰への負担が蓄積し、慢性的な腰痛になっている</div>
+      </div>
+      <div class="issue-card fade-in">
+        <div class="issue-icon">⚡</div>
+        <div class="issue-title">ぎっくり腰・急な痛み</div>
+        <div class="issue-desc">急な動作で腰を痛めた。早く回復して日常生活に戻りたい</div>
+      </div>
+      <div class="issue-card fade-in">
+        <div class="issue-icon">🏃</div>
+        <div class="issue-title">スポーツでの怪我</div>
+        <div class="issue-desc">スポーツ中に怪我をした。早く競技に復帰したい</div>
+      </div>
+      <div class="issue-card fade-in">
+        <div class="issue-icon">😴</div>
+        <div class="issue-title">他院で改善しなかった</div>
+        <div class="issue-desc">整体やマッサージに通ったが、根本的に改善しない</div>
+      </div>
+      <div class="issue-card fade-in">
+        <div class="issue-icon">🤸</div>
+        <div class="issue-title">産後の体の不調</div>
+        <div class="issue-desc">産後から腰や骨盤まわりの痛みが続いている</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-label">Our Features</div>
+      <h2 class="section-title">当院が選ばれる<br>3つの理由</h2>
+      <p class="section-desc">症状の「その場しのぎ」ではなく、再発しない体づくりを一緒に目指します。</p>
+    </div>
+    <div class="feature-list">
+      <div class="feature-item fade-in">
+        <div class="feature-num">01</div>
+        <div class="feature-content">
+          <div class="feature-title">原因から改善する根本治療</div>
+          <div class="feature-desc">痛みの出ている場所だけを処置するのではなく、なぜその痛みが起きているのかを根本から探り、再発しない体づくりを目指します。姿勢分析・動作確認・問診を丁寧に行います。</div>
+        </div>
+      </div>
+      <div class="feature-item fade-in">
+        <div class="feature-num">02</div>
+        <div class="feature-content">
+          <div class="feature-title">国家資格保有の施術者が担当</div>
+          <div class="feature-desc">柔道整復師の国家資格を持つスタッフが施術します。豊富な臨床経験をもとに、安心・安全な施術を提供。初めての方でもお気軽にご相談ください。</div>
+        </div>
+      </div>
+      <div class="feature-item fade-in">
+        <div class="feature-num">03</div>
+        <div class="feature-content">
+          <div class="feature-title">完全個室・プライベート施術</div>
+          <div class="feature-desc">他の患者さんの目を気にせず、リラックスして施術を受けていただけます。女性の方や初めての方も安心してお越しください。予約制で待ち時間もほぼゼロです。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-label">Menu</div>
+      <h2 class="section-title">施術メニュー</h2>
+      <p class="section-desc">お体の状態やお悩みに合わせて最適なメニューをご提案します。</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card fade-in">
+        <div class="menu-color menu-color-1"></div>
+        <div class="menu-body">
+          <div class="menu-icon">🌿</div>
+          <div class="menu-name">初診・根本改善コース</div>
+          <div class="menu-desc">初めての方向け。姿勢分析・問診・施術を丁寧に行います。お体の状態をしっかり把握します。</div>
+          <div class="menu-price">¥3,500 <span>（初回限定）</span></div>
+        </div>
+      </div>
+      <div class="menu-card fade-in">
+        <div class="menu-color menu-color-2"></div>
+        <div class="menu-body">
+          <div class="menu-icon">💆</div>
+          <div class="menu-name">整体・骨格矯正</div>
+          <div class="menu-desc">歪んだ骨格・姿勢を整えます。慢性的な肩こり・腰痛・猫背の改善に効果的です。</div>
+          <div class="menu-price">¥4,800 <span>〜</span></div>
+        </div>
+      </div>
+      <div class="menu-card fade-in">
+        <div class="menu-color menu-color-3"></div>
+        <div class="menu-body">
+          <div class="menu-icon">⚡</div>
+          <div class="menu-name">急性症状（ぎっくり腰等）</div>
+          <div class="menu-desc">急な痛みに素早く対応。当日予約・急患対応可能。早期回復をサポートします。</div>
+          <div class="menu-price">¥3,000 <span>〜</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE -->
+<section class="voice" id="voice">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-label">Voice</div>
+      <h2 class="section-title">患者様の声</h2>
+    </div>
+    <div class="voice-grid">
+      <div class="voice-card fade-in">
+        <div class="stars">★★★★★</div>
+        <div class="voice-text">「長年悩んでいた腰痛が、数回の施術でかなり楽になりました。先生が丁寧に原因を説明してくださるので、自分でも気をつけるポイントがわかりました。」</div>
+        <div class="voice-author">40代女性・会社員</div>
+      </div>
+      <div class="voice-card fade-in">
+        <div class="stars">★★★★★</div>
+        <div class="voice-text">「ぎっくり腰で歩けない状態で行きましたが、当日中に痛みが和らぎました。次の日にはほぼ普通に動けて本当に助かりました。」</div>
+        <div class="voice-author">30代男性・自営業</div>
+      </div>
+      <div class="voice-card fade-in">
+        <div class="stars">★★★★★</div>
+        <div class="voice-text">「産後から続いていた骨盤の違和感がすっきりしました。個室で施術していただけるので、子連れでも安心して通えています。」</div>
+        <div class="voice-author">30代女性・主婦</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section id="info">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-label">Access</div>
+      <h2 class="section-title">アクセス・診療時間</h2>
+    </div>
+    <div class="info-grid fade-in">
+      <table class="info-table">
+        <tr><th>院名</th><td>みどり整骨院</td></tr>
+        <tr><th>住所</th><td>○○県○○市○○町1-2-3<br>○○駅より徒歩5分</td></tr>
+        <tr><th>電話</th><td>000-0000-0000</td></tr>
+        <tr><th>診療時間</th><td>
+          平日 9:00〜20:00<br>
+          土曜 9:00〜17:00<br>
+          日・祝 休診
+        </td></tr>
+        <tr><th>駐車場</th><td>院前に3台あり（無料）</td></tr>
+        <tr><th>支払い</th><td>現金・各種クレジットカード</td></tr>
+      </table>
+      <div>
+        <div class="map-placeholder">
+          <div style="font-size:32px">📍</div>
+          <div>Googleマップ埋め込み予定</div>
+          <div style="font-size:12px;opacity:.7">○○市○○町1-2-3</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-label">Contact</div>
+      <h2 class="section-title">ご予約・お問い合わせ</h2>
+      <p class="section-desc">初めての方もお気軽にご連絡ください。まずは無料相談からどうぞ。</p>
+    </div>
+    <div class="contact-box fade-in">
+      <div class="form-row">
+        <label class="form-label">お名前<span class="req">必須</span></label>
+        <input type="text" class="form-input" placeholder="山田 太郎">
+      </div>
+      <div class="form-row">
+        <label class="form-label">電話番号<span class="req">必須</span></label>
+        <input type="tel" class="form-input" placeholder="000-0000-0000">
+      </div>
+      <div class="form-row">
+        <label class="form-label">お悩みの症状</label>
+        <select class="form-select">
+          <option value="">選択してください</option>
+          <option>肩こり・首こり</option>
+          <option>腰痛・ぎっくり腰</option>
+          <option>スポーツ障害</option>
+          <option>産後の不調</option>
+          <option>その他</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label class="form-label">ご希望の予約日時・メッセージ</label>
+        <textarea class="form-textarea" placeholder="ご希望の日時や気になる症状をお書きください"></textarea>
+      </div>
+      <button class="form-submit" onclick="alert('サンプルサイトのため実際には送信されません')">予約リクエストを送る</button>
+
+      <div class="tel-large">
+        <p>お電話でのご予約・お問い合わせ</p>
+        <div class="tel-number">000-0000-0000</div>
+        <div class="tel-hours">受付時間 9:00〜20:00（日・祝除く）</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>みどり整骨院</strong>
+  <p style="margin-top:12px">〒000-0000 ○○県○○市○○町1-2-3 ／ TEL: 000-0000-0000</p>
+  <p style="margin-top:8px">© 2025 みどり整骨院 All Rights Reserved.</p>
+</footer>
+
+<script>
+// Fade in on scroll
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

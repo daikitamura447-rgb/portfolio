@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hair Salon LUMIÈRE | 髪と向き合う、上質なサロン</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e0c0b;--s1:#161210;--s2:#1e1a17;--gold:#c9a96e;--gold2:#e0c080;--cream:#f8f4ee;--text:#1a1612;--muted:#8a7a6a;--white:#fff;}
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden;}
+#loader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;transition:opacity .8s .2s;}
+#loader.hide{opacity:0;pointer-events:none;}
+.l-en{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;color:var(--gold);letter-spacing:6px;animation:fb 1.2s ease-in-out infinite;}
+.l-bar{width:140px;height:1px;background:rgba(201,169,110,.2);overflow:hidden;}
+.l-fill{height:100%;background:var(--gold);width:0;transition:width 1s;}
+@keyframes fb{0%,100%{opacity:.5}50%{opacity:1}}
+header{position:fixed;top:0;left:0;right:0;z-index:100;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;transition:all .4s;}
+header.scrolled{background:rgba(14,12,11,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,169,110,.15);}
+.logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold);letter-spacing:4px;}
+.logo-sub{font-size:9px;color:rgba(255,255,255,.35);letter-spacing:4px;margin-top:3px;}
+nav{display:flex;align-items:center;gap:32px;}
+nav a{color:rgba(255,255,255,.55);font-size:12px;letter-spacing:1px;text-decoration:none;transition:color .2s;}
+nav a:hover{color:var(--gold);}
+.nav-btn{border:1px solid var(--gold);color:var(--gold);padding:8px 22px;font-size:12px;letter-spacing:1px;text-decoration:none;transition:all .3s;}
+.nav-btn:hover{background:var(--gold);color:var(--bg);}
+.hbg{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.hbg span{width:22px;height:1px;background:rgba(255,255,255,.7);display:block;}
+.sp-nav{display:none;position:fixed;inset:0;background:rgba(14,12,11,.97);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:40px;}
+.sp-nav.open{display:flex;}
+.sp-nav a{color:rgba(255,255,255,.7);font-size:20px;font-family:'Playfair Display',serif;letter-spacing:4px;text-decoration:none;}
+.sp-close{position:absolute;top:24px;right:28px;font-size:26px;color:rgba(255,255,255,.4);cursor:pointer;background:none;border:none;}
+.hero{height:100vh;background:radial-gradient(ellipse at 25% 60%,rgba(201,169,110,.12) 0%,transparent 55%),linear-gradient(165deg,#0e0c0b 0%,#1a1410 100%);display:flex;align-items:center;position:relative;overflow:hidden;}
+.hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 60px,rgba(201,169,110,.02) 60px,rgba(201,169,110,.02) 61px);z-index:0;}
+.hero-circle{position:absolute;right:10%;top:50%;transform:translateY(-50%);width:min(500px,50vw);height:min(500px,50vw);border-radius:50%;border:1px solid rgba(201,169,110,.08);z-index:0;}
+.hero-circle::before{content:'';position:absolute;inset:24px;border-radius:50%;border:1px solid rgba(201,169,110,.05);}
+.hero-circle::after{content:'';position:absolute;inset:60px;border-radius:50%;background:radial-gradient(circle,rgba(201,169,110,.06),transparent 70%);}
+.hero-c{position:relative;z-index:1;padding:0 80px;}
+.h-ey{font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:28px;opacity:0;animation:fu .8s .4s forwards;}
+.h-t{font-family:'Playfair Display',serif;font-size:clamp(44px,8vw,88px);font-weight:700;color:white;line-height:1.1;margin-bottom:12px;opacity:0;animation:fu .8s .6s forwards;}
+.h-t em{font-style:italic;color:var(--gold);}
+.h-sub{font-family:'Playfair Display',serif;font-size:clamp(16px,3vw,26px);color:rgba(255,255,255,.4);letter-spacing:4px;margin-bottom:40px;opacity:0;animation:fu .8s .8s forwards;}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:fu .8s 1s forwards;}
+.b-g{background:var(--gold);color:var(--bg);padding:15px 40px;font-size:13px;font-weight:700;letter-spacing:2px;text-decoration:none;transition:all .3s;}
+.b-g:hover{background:var(--gold2);}
+.b-o{border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.75);padding:14px 38px;font-size:13px;letter-spacing:2px;text-decoration:none;transition:all .3s;}
+.b-o:hover{border-color:var(--gold);color:var(--gold);}
+@keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.concept{background:var(--s1);padding:110px 48px;}
+.ci{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.el{font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.el::before{content:'';width:24px;height:1px;background:var(--gold);}
+.ct{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,48px);font-weight:700;color:white;line-height:1.4;margin-bottom:20px;}
+.cd{font-size:14px;color:rgba(255,255,255,.5);line-height:2.2;font-weight:300;}
+.c-visual{display:flex;flex-direction:column;gap:1px;}
+.cv-item{background:rgba(255,255,255,.03);padding:20px 24px;border-left:2px solid var(--gold);display:flex;gap:16px;align-items:flex-start;transition:background .2s;}
+.cv-item:hover{background:rgba(201,169,110,.06);}
+.cv-n{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:rgba(201,169,110,.3);min-width:40px;}
+.cv-t{font-size:15px;font-weight:500;color:white;margin-bottom:4px;}
+.cv-d{font-size:13px;color:rgba(255,255,255,.45);line-height:1.7;}
+.menu-s{background:var(--bg);padding:110px 48px;}
+.sh{text-align:center;margin-bottom:64px;}
+.sl{font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:16px;}
+.sl::before,.sl::after{content:'';width:32px;height:1px;background:var(--gold);}
+.st{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,56px);font-weight:700;color:white;}
+.menu-tabs{display:flex;justify-content:center;gap:0;margin-bottom:48px;border:1px solid rgba(201,169,110,.2);}
+.mt{padding:11px 28px;font-size:12px;letter-spacing:2px;cursor:pointer;color:rgba(255,255,255,.4);background:transparent;border:none;font-family:'Noto Sans JP',sans-serif;transition:all .3s;border-right:1px solid rgba(201,169,110,.2);}
+.mt:last-child{border-right:none;}
+.mt.active{background:var(--gold);color:var(--bg);font-weight:700;}
+.mt:hover:not(.active){color:var(--gold);}
+.mpanel{display:none;max-width:900px;margin:0 auto;display:none;}
+.mpanel.active{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(201,169,110,.1);}
+.mi{background:var(--s1);padding:28px 24px;transition:background .3s;}
+.mi:hover{background:var(--s2);}
+.mi-tag{font-size:9px;letter-spacing:2px;color:var(--gold);margin-bottom:10px;}
+.mi-n{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:white;margin-bottom:8px;}
+.mi-d{font-size:12px;color:rgba(255,255,255,.4);line-height:1.8;margin-bottom:16px;}
+.mi-p{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--gold);}
+.mi-p span{font-size:12px;font-family:'Noto Sans JP',sans-serif;color:rgba(255,255,255,.3);}
+.staff-s{background:var(--s1);padding:110px 48px;}
+.staff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:56px;max-width:900px;margin-left:auto;margin-right:auto;}
+.staff-card{background:var(--s2);padding:32px 24px;text-align:center;transition:transform .3s;}
+.staff-card:hover{transform:translateY(-4px);}
+.staff-av{width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(201,169,110,.15),rgba(201,169,110,.05));border:1px solid rgba(201,169,110,.2);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;}
+.staff-n{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:white;margin-bottom:4px;}
+.staff-r{font-size:11px;color:var(--gold);letter-spacing:2px;margin-bottom:12px;}
+.staff-d{font-size:12px;color:rgba(255,255,255,.4);line-height:1.8;}
+.access-s{background:var(--bg);padding:110px 48px;}
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:56px;max-width:900px;margin-left:auto;margin-right:auto;align-items:start;}
+.ar{display:flex;flex-direction:column;gap:0;}
+.arow{display:flex;gap:20px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.arow:last-child{border-bottom:none;}
+.ak{font-size:11px;color:var(--gold);letter-spacing:1px;min-width:68px;padding-top:2px;}
+.av{font-size:13px;color:rgba(255,255,255,.6);line-height:1.8;}
+.mapbox{background:rgba(255,255,255,.03);border:1px solid rgba(201,169,110,.15);height:260px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:rgba(255,255,255,.3);font-size:13px;}
+.reserve-s{background:linear-gradient(135deg,#100c09,#1e1610);padding:110px 48px;position:relative;overflow:hidden;}
+.reserve-s::before{content:'L';font-family:'Playfair Display',serif;font-size:400px;font-weight:700;color:rgba(201,169,110,.03);position:absolute;right:-40px;top:50%;transform:translateY(-50%);line-height:1;pointer-events:none;}
+.rbox{background:rgba(255,255,255,.03);border:1px solid rgba(201,169,110,.2);padding:48px;max-width:620px;position:relative;z-index:1;}
+.fg{margin-bottom:20px;}
+.fl{display:block;font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:10px;}
+.fi,.fs,.ft{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:white;padding:13px 15px;font-size:13px;font-family:'Noto Sans JP',sans-serif;outline:none;transition:border .3s;}
+.fi::placeholder{color:rgba(255,255,255,.2);}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(--gold);}
+.fs option{background:var(--s1);color:white;}
+.ft{height:100px;resize:vertical;}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.fsub{width:100%;background:var(--gold);color:var(--bg);border:none;padding:16px;font-size:14px;font-weight:700;font-family:'Noto Sans JP',sans-serif;letter-spacing:3px;cursor:pointer;transition:all .3s;margin-top:8px;}
+.fsub:hover{background:var(--gold2);}
+.tel-c{text-align:center;margin-top:36px;padding-top:36px;border-top:1px solid rgba(255,255,255,.07);}
+.tel-c p{font-size:11px;color:rgba(255,255,255,.3);letter-spacing:2px;margin-bottom:8px;}
+.tel-n{font-family:'Playfair Display',serif;font-size:40px;font-weight:700;color:var(--gold);letter-spacing:4px;}
+.tel-h{font-size:11px;color:rgba(255,255,255,.25);margin-top:6px;}
+footer{background:#080604;padding:56px 48px 28px;border-top:1px solid rgba(201,169,110,.1);}
+.fi2{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;margin-bottom:40px;}
+.fl2{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--gold);letter-spacing:4px;}
+.fl2s{font-size:10px;color:rgba(255,255,255,.25);letter-spacing:3px;margin-top:6px;}
+.fn{display:flex;flex-direction:column;gap:12px;}
+.fn a{font-size:12px;color:rgba(255,255,255,.3);text-decoration:none;letter-spacing:0.5px;transition:color .2s;}
+.fn a:hover{color:var(--gold);}
+.fb{max-width:900px;margin:0 auto;border-top:1px solid rgba(255,255,255,.05);padding-top:20px;text-align:center;font-size:11px;color:rgba(255,255,255,.2);}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--gold);color:var(--bg);padding:13px 28px;font-size:13px;font-weight:700;opacity:0;transition:all .4s;z-index:999;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+@media(max-width:768px){
+  header{padding:0 20px;}nav{display:none;}.hbg{display:flex;}
+  .hero-c{padding:0 24px;}.ci,.ag{grid-template-columns:1fr;gap:40px;}
+  .concept,.menu-s,.staff-s,.access-s,.reserve-s{padding:80px 20px;}
+  .rbox{padding:28px 20px;}.fr2{grid-template-columns:1fr;}
+  .fi2{flex-direction:column;}.hero-circle{display:none;}
+}
+</style>
+</head>
+<body>
+<div id="loader"><div class="l-en">LUMIÈRE</div><div class="l-bar"><div class="l-fill" id="lf"></div></div></div>
+<div class="sp-nav" id="spn">
+  <button class="sp-close" onclick="document.getElementById('spn').classList.remove('open')">✕</button>
+  <a href="#concept" onclick="document.getElementById('spn').classList.remove('open')">こだわり</a>
+  <a href="#menu-s" onclick="document.getElementById('spn').classList.remove('open')">メニュー</a>
+  <a href="#staff" onclick="document.getElementById('spn').classList.remove('open')">スタイリスト</a>
+  <a href="#access-s" onclick="document.getElementById('spn').classList.remove('open')">アクセス</a>
+  <a href="#reserve" onclick="document.getElementById('spn').classList.remove('open')">予約</a>
+</div>
+<header id="hdr">
+  <div><div class="logo">LUMIÈRE</div><div class="logo-sub">HAIR SALON</div></div>
+  <nav>
+    <a href="#concept">こだわり</a><a href="#menu-s">メニュー</a>
+    <a href="#staff">スタイリスト</a><a href="#access-s">アクセス</a>
+    <a href="#reserve" class="nav-btn">ご予約</a>
+  </nav>
+  <div class="hbg" onclick="document.getElementById('spn').classList.add('open')"><span></span><span></span><span></span></div>
+</header>
+<section class="hero">
+  <div class="hero-lines"></div><div class="hero-circle"></div>
+  <div class="hero-c">
+    <div class="h-ey">HAIR SALON IN ○○</div>
+    <h1 class="h-t">あなたの<em>美しさ</em>を、<br>引き出す。</h1>
+    <div class="h-sub">LUMIÈRE — 光のような輝きを</div>
+    <div class="hero-btns">
+      <a href="#reserve" class="b-g">ご予約はこちら</a>
+      <a href="#menu-s" class="b-o">メニューを見る</a>
+    </div>
+  </div>
+</section>
+<section class="concept" id="concept">
+  <div class="ci">
+    <div class="reveal">
+      <div class="el">OUR PHILOSOPHY</div>
+      <h2 class="ct">髪と対話する<br>サロン</h2>
+      <p class="cd">流行を追うのではなく、あなた自身の個性と髪質を丁寧に見極め、最もあなたらしいスタイルを提案します。カウンセリングから仕上げまで、一人ひとりに向き合います。</p>
+    </div>
+    <div class="c-visual reveal">
+      <div class="cv-item"><div class="cv-n">01</div><div><div class="cv-t">丁寧なカウンセリング</div><div class="cv-d">お悩みと理想をしっかりお聞きします</div></div></div>
+      <div class="cv-item"><div class="cv-n">02</div><div><div class="cv-t">髪質診断・提案</div><div class="cv-d">あなたの髪に合ったスタイルを提案</div></div></div>
+      <div class="cv-item"><div class="cv-n">03</div><div><div class="cv-t">ホームケアまで</div><div class="cv-d">帰宅後のケア方法もアドバイス</div></div></div>
+    </div>
+  </div>
+</section>
+<section class="menu-s" id="menu-s">
+  <div class="sh reveal"><div class="sl">MENU</div><h2 class="st">メニュー</h2></div>
+  <div class="menu-tabs reveal">
+    <button class="mt active" onclick="swM('cut',this)">カット</button>
+    <button class="mt" onclick="swM('color',this)">カラー</button>
+    <button class="mt" onclick="swM('perm',this)">パーマ</button>
+    <button class="mt" onclick="swM('treat',this)">トリートメント</button>
+  </div>
+  <div id="p-cut" class="mpanel active">
+    <div class="mi"><div class="mi-tag">BASIC</div><div class="mi-n">カット</div><div class="mi-d">シャンプー・ブロー込み。お悩み別カウンセリング付き。</div><div class="mi-p">¥4,500<span>〜</span></div></div>
+    <div class="mi"><div class="mi-tag">SHORT / BOB</div><div class="mi-n">カット＋スタイリング</div><div class="mi-d">スタイリング剤を使って仕上げまで対応。</div><div class="mi-p">¥5,500<span>〜</span></div></div>
+    <div class="mi"><div class="mi-tag">MEN'S</div><div class="mi-n">メンズカット</div><div class="mi-d">メンズスタイルに特化したカット。</div><div class="mi-p">¥3,800<span>〜</span></div></div>
+  </div>
+  <div id="p-color" class="mpanel">
+    <div class="mi"><div class="mi-tag">STANDARD</div><div class="mi-n">ワンカラー</div><div class="mi-d">根元から毛先まで均一に染める定番カラー。</div><div class="mi-p">¥6,000<span>〜</span></div></div>
+    <div class="mi"><div class="mi-tag">HIGHLIGHT</div><div class="mi-n">ハイライト</div><div class="mi-d">細かく入れたハイライトで立体感と透明感を演出。</div><div class="mi-p">¥9,000<span>〜</span></div></div>
+    <div class="mi"><div class="mi-tag">BLEACH</div><div class="mi-n">ブリーチ＋カラー</div><div class="mi-d">ハイトーンや発色を重視した透明感カラー。</div><div class="mi-p">¥14,000<span>〜</span></div></div>
+  </div>
+  <div id="p-perm" class="mpanel">
+    <div class="mi"><div class="mi-tag">NATURAL</div><div class="mi-n">デジタルパーマ</div><div class="mi-d">乾かすだけでスタイルが決まる。ダメージ少なめ。</div><div class="mi-p">¥11,000<span>〜</span></div></div>
+    <div class="mi"><div class="mi-tag">STRAIGHT</div><div class="mi-n">縮毛矯正</div><div class="mi-d">くせ毛・広がりをしっかり伸ばすストレート。</div><div class="mi-p">¥16,000<span>〜</span></div></div>
+  </div>
+  <div id="p-treat" class="mpanel">
+    <div class="mi"><div class="mi-tag">BASIC</div><div class="mi-n">トリートメント</div><div class="mi-d">補修・保湿・ツヤ出しの基本トリートメント。</div><div class="mi-p">¥2,500<span>〜</span></div></div>
+    <div class="mi"><div class="mi-tag">PREMIUM</div><div class="mi-n">プレミアムケア</div><div class="mi-d">高濃度成分で集中補修。ダメージ毛に◎</div><div class="mi-p">¥5,000<span>〜</span></div></div>
+  </div>
+</section>
+<section class="staff-s" id="staff">
+  <div style="max-width:900px;margin:0 auto">
+    <div class="sh reveal"><div class="sl">STYLIST</div><h2 class="st">スタイリスト</h2></div>
+    <div class="staff-grid">
+      <div class="staff-card reveal"><div class="staff-av">✂️</div><div class="staff-n">○○ ○○</div><div class="staff-r">HEAD STYLIST</div><div class="staff-d">美容師歴12年。得意スタイル：ショート・ボブ。カラーリスト資格保有。</div></div>
+      <div class="staff-card reveal"><div class="staff-av">💇</div><div class="staff-n">△△ △△</div><div class="staff-r">STYLIST</div><div class="staff-d">美容師歴7年。カラーとパーマが得意。ナチュラルスタイルが専門。</div></div>
+      <div class="staff-card reveal"><div class="staff-av">🌸</div><div class="staff-n">□□ □□</div><div class="staff-r">JUNIOR STYLIST</div><div class="staff-d">美容師歴3年。トレンドに敏感。アシスタント対応も丁寧。</div></div>
+    </div>
+  </div>
+</section>
+<section class="access-s" id="access-s">
+  <div style="max-width:900px;margin:0 auto">
+    <div class="sh reveal"><div class="sl">ACCESS</div><h2 class="st">アクセス</h2></div>
+    <div class="ag">
+      <div class="ar reveal">
+        <div class="arow"><div class="ak">店名</div><div class="av">Hair Salon LUMIÈRE</div></div>
+        <div class="arow"><div class="ak">住所</div><div class="av">○○県○○市○○町1-2-3<br>○○駅より徒歩5分</div></div>
+        <div class="arow"><div class="ak">電話</div><div class="av">000-0000-0000</div></div>
+        <div class="arow"><div class="ak">営業時間</div><div class="av">10:00〜20:00（最終受付19:00）<br>定休日：月曜・第1火曜</div></div>
+        <div class="arow"><div class="ak">駐車場</div><div class="av">近隣コインPをご利用ください</div></div>
+      </div>
+      <div class="reveal"><div class="mapbox"><div style="font-size:32px">📍</div><div>Googleマップ</div><div style="font-size:11px;opacity:.5;margin-top:4px">○○市○○町1-2-3</div></div></div>
+    </div>
+  </div>
+</section>
+<section class="reserve-s" id="reserve">
+  <div style="max-width:900px;margin:0 auto;position:relative;z-index:1">
+    <div class="sh reveal"><div class="sl">RESERVATION</div><h2 class="st">ご予約</h2></div>
+    <div class="rbox reveal">
+      <div class="fr2">
+        <div class="fg"><label class="fl">お名前 *</label><input type="text" class="fi" placeholder="山田 花子"></div>
+        <div class="fg"><label class="fl">電話番号 *</label><input type="tel" class="fi" placeholder="000-0000-0000"></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">ご希望メニュー</label><select class="fs"><option>カット</option><option>カラー</option><option>パーマ</option><option>カット＋カラー</option><option>その他</option></select></div>
+        <div class="fg"><label class="fl">担当スタイリスト</label><select class="fs"><option>指定なし</option><option>○○ ○○</option><option>△△ △△</option><option>□□ □□</option></select></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">ご希望日 *</label><input type="date" class="fi"></div>
+        <div class="fg"><label class="fl">ご希望時間</label><select class="fs"><option>10:00</option><option>11:00</option><option>12:00</option><option>13:00</option><option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option><option>18:00</option><option>19:00</option></select></div>
+      </div>
+      <div class="fg"><label class="fl">ご要望・髪のお悩み</label><textarea class="ft" placeholder="髪のお悩みや仕上がりのイメージをお書きください"></textarea></div>
+      <button class="fsub" onclick="document.getElementById('toast').classList.add('show');setTimeout(()=>document.getElementById('toast').classList.remove('show'),3500)">予約リクエストを送る</button>
+      <div class="tel-c"><p>お電話でのご予約</p><div class="tel-n">000-0000-0000</div><div class="tel-h">受付 10:00〜19:00（月曜・第1火曜除く）</div></div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="fi2"><div><div class="fl2">LUMIÈRE</div><div class="fl2s">HAIR SALON</div></div><div class="fn"><a href="#concept">こだわり</a><a href="#menu-s">メニュー</a><a href="#staff">スタイリスト</a><a href="#access-s">アクセス</a><a href="#reserve">ご予約</a></div></div>
+  <div class="fb">© 2025 Hair Salon LUMIÈRE All Rights Reserved.</div>
+</footer>
+<div class="toast" id="toast">ご予約を受け付けました！</div>
+<script>
+window.addEventListener('load',()=>{document.getElementById('lf').style.width='100%';setTimeout(()=>document.getElementById('loader').classList.add('hide'),1000);});
+window.addEventListener('scroll',()=>document.getElementById('hdr').classList.toggle('scrolled',window.scrollY>50));
+function swM(id,el){document.querySelectorAll('.mpanel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.mt').forEach(t=>t.classList.remove('active'));document.getElementById('p-'+id).classList.add('active');el.classList.add('active');}
+const ro=new IntersectionObserver(entries=>entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*60);}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>

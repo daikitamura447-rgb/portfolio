@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>麺や 蒼天 | 本格醤油ラーメン</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0d0a08;
+  --dark: #1a1410;
+  --brown: #3d2b1a;
+  --amber: #c8761a;
+  --amber-light: #e8961e;
+  --cream: #f5efe6;
+  --warm-white: #faf7f2;
+  --text: #1a1410;
+  --muted: #7a6a5a;
+  --red: #c0392b;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:var(--black);overflow-x:hidden;}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:var(--black);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity .8s .2s;}
+#loader.hide{opacity:0;pointer-events:none;}
+.loader-kanji{font-family:'Zen Old Mincho',serif;font-size:72px;font-weight:900;color:var(--amber);animation:pulse 1.2s ease-in-out infinite;}
+.loader-bar{width:160px;height:2px;background:rgba(200,118,26,.2);border-radius:2px;overflow:hidden;}
+.loader-fill{height:100%;background:var(--amber);width:0%;transition:width .8s ease;border-radius:2px;}
+@keyframes pulse{0%,100%{opacity:.6;transform:scale(.97)}50%{opacity:1;transform:scale(1)}}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 40px;height:72px;display:flex;align-items:center;justify-content:space-between;transition:all .4s;}
+header.scrolled{background:rgba(13,10,8,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,118,26,.2);}
+.logo{display:flex;align-items:center;gap:14px;}
+.logo-en{font-family:'Zen Old Mincho',serif;font-size:26px;font-weight:900;color:var(--amber);letter-spacing:4px;line-height:1;}
+.logo-jp{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:3px;margin-top:3px;}
+nav{display:flex;align-items:center;gap:32px;}
+nav a{color:rgba(255,255,255,.65);font-size:13px;letter-spacing:1px;text-decoration:none;transition:color .2s;position:relative;}
+nav a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--amber);transform:scaleX(0);transition:transform .2s;}
+nav a:hover{color:var(--amber);}
+nav a:hover::after{transform:scaleX(1);}
+.nav-reserve{background:var(--amber);color:var(--black);padding:9px 22px;border-radius:2px;font-size:13px;font-weight:700;text-decoration:none;letter-spacing:1px;transition:background .2s;}
+.nav-reserve:hover{background:var(--amber-light);}
+.menu-btn{display:none;flex-direction:column;gap:6px;cursor:pointer;padding:4px;}
+.menu-btn span{width:24px;height:1.5px;background:rgba(255,255,255,.8);display:block;transition:all .3s;}
+
+/* MOBILE NAV */
+.mobile-nav{display:none;position:fixed;inset:0;background:rgba(13,10,8,.98);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:40px;}
+.mobile-nav.open{display:flex;}
+.mobile-nav a{color:rgba(255,255,255,.8);font-size:22px;font-family:'Zen Old Mincho',serif;letter-spacing:4px;text-decoration:none;transition:color .2s;}
+.mobile-nav a:hover{color:var(--amber);}
+.mobile-close{position:absolute;top:28px;right:32px;font-size:28px;color:rgba(255,255,255,.6);cursor:pointer;background:none;border:none;}
+
+/* HERO */
+.hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 60%, rgba(200,118,26,.18) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(192,57,43,.12) 0%, transparent 50%), linear-gradient(180deg,rgba(13,10,8,0) 0%,rgba(13,10,8,.6) 100%);z-index:1;}
+/* Animated steam */
+.steam-wrap{position:absolute;bottom:0;left:0;right:0;height:100%;z-index:0;overflow:hidden;}
+.steam{position:absolute;bottom:0;width:2px;background:linear-gradient(to top,rgba(255,255,255,.06),transparent);border-radius:50%;animation:steam-rise linear infinite;}
+@keyframes steam-rise{0%{transform:translateY(0) scaleX(1);opacity:.5;}50%{transform:translateY(-40%) scaleX(2);opacity:.3;}100%{transform:translateY(-100%) scaleX(3);opacity:0;}}
+/* Grid lines */
+.grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(200,118,26,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,118,26,.04) 1px,transparent 1px);background-size:60px 60px;z-index:0;}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 24px;}
+.hero-eyebrow{font-size:11px;letter-spacing:5px;color:var(--amber);margin-bottom:28px;opacity:0;animation:fadeUp .8s .4s forwards;}
+.hero-kanji{font-family:'Zen Old Mincho',serif;font-size:clamp(72px,16vw,160px);font-weight:900;color:white;line-height:.9;margin-bottom:16px;opacity:0;animation:fadeUp .8s .6s forwards;text-shadow:0 0 80px rgba(200,118,26,.3);}
+.hero-sub{font-family:'Zen Old Mincho',serif;font-size:clamp(18px,4vw,32px);color:rgba(255,255,255,.7);letter-spacing:8px;margin-bottom:48px;opacity:0;animation:fadeUp .8s .8s forwards;}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s 1s forwards;}
+.btn-gold{background:var(--amber);color:var(--black);padding:16px 40px;font-size:15px;font-weight:700;letter-spacing:2px;text-decoration:none;transition:all .3s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
+.btn-gold:hover{background:var(--amber-light);transform:translateY(-2px);}
+.btn-ghost{border:1px solid rgba(255,255,255,.35);color:rgba(255,255,255,.8);padding:15px 38px;font-size:15px;letter-spacing:2px;text-decoration:none;transition:all .3s;}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber);}
+.scroll-indicator{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.3);font-size:10px;letter-spacing:3px;animation:bounce 2.5s infinite;}
+.scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,rgba(200,118,26,.6),transparent);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+
+/* CONCEPT */
+.concept{background:var(--dark);padding:120px 40px;position:relative;overflow:hidden;}
+.concept::before{content:'蒼';font-family:'Zen Old Mincho',serif;font-size:360px;font-weight:900;color:rgba(200,118,26,.04);position:absolute;right:-40px;top:50%;transform:translateY(-50%);line-height:1;pointer-events:none;}
+.concept-inner{max-width:920px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.concept-label{font-size:10px;letter-spacing:4px;color:var(--amber);margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+.concept-label::before{content:'';width:32px;height:1px;background:var(--amber);}
+.concept-title{font-family:'Zen Old Mincho',serif;font-size:clamp(28px,5vw,52px);font-weight:900;color:white;line-height:1.4;margin-bottom:28px;}
+.concept-text{font-size:15px;color:rgba(255,255,255,.55);line-height:2.2;font-weight:300;}
+.concept-visual{position:relative;}
+.bowl-art{width:100%;aspect-ratio:1;background:radial-gradient(circle at 40% 45%, rgba(200,118,26,.25) 0%, rgba(192,57,43,.12) 40%, transparent 70%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:120px;position:relative;}
+.bowl-art::before{content:'';position:absolute;inset:10px;border:1px solid rgba(200,118,26,.15);border-radius:50%;animation:rotate 20s linear infinite;}
+.bowl-art::after{content:'';position:absolute;inset:24px;border:1px solid rgba(200,118,26,.08);border-radius:50%;animation:rotate 30s linear infinite reverse;}
+@keyframes rotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.05);margin-top:60px;border:1px solid rgba(255,255,255,.05);}
+.stat{background:var(--dark);padding:28px 20px;text-align:center;}
+.stat-num{font-family:'Zen Old Mincho',serif;font-size:40px;font-weight:900;color:var(--amber);}
+.stat-unit{font-size:13px;color:var(--amber);margin-left:2px;}
+.stat-label{font-size:11px;color:rgba(255,255,255,.35);margin-top:6px;letter-spacing:1px;}
+
+/* MENU */
+.menu-section{background:var(--black);padding:120px 40px;}
+.section-header{text-align:center;margin-bottom:72px;}
+.sec-label{font-size:10px;letter-spacing:5px;color:var(--amber);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:16px;}
+.sec-label::before,.sec-label::after{content:'';width:40px;height:1px;background:var(--amber);}
+.sec-title{font-family:'Zen Old Mincho',serif;font-size:clamp(32px,6vw,60px);font-weight:900;color:white;}
+.menu-tabs{display:flex;justify-content:center;gap:0;margin-bottom:56px;border:1px solid rgba(200,118,26,.3);}
+.mtab{padding:12px 32px;font-size:13px;letter-spacing:2px;cursor:pointer;color:rgba(255,255,255,.45);background:transparent;border:none;font-family:'Noto Sans JP',sans-serif;transition:all .3s;border-right:1px solid rgba(200,118,26,.3);}
+.mtab:last-child{border-right:none;}
+.mtab.active{background:var(--amber);color:var(--black);font-weight:700;}
+.mtab:hover:not(.active){color:var(--amber);}
+.menu-panels{max-width:960px;margin:0 auto;}
+.menu-panel{display:none;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:rgba(255,255,255,.05);}
+.menu-panel.active{display:grid;}
+.menu-item{background:var(--dark);padding:36px 28px;transition:background .3s;cursor:pointer;position:relative;overflow:hidden;}
+.menu-item::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--amber);transform:scaleX(0);transition:transform .3s;transform-origin:left;}
+.menu-item:hover{background:#201810;}
+.menu-item:hover::before{transform:scaleX(1);}
+.menu-tag{font-size:10px;letter-spacing:2px;color:var(--amber);margin-bottom:12px;}
+.menu-name{font-family:'Zen Old Mincho',serif;font-size:22px;font-weight:700;color:white;margin-bottom:10px;}
+.menu-desc{font-size:13px;color:rgba(255,255,255,.45);line-height:1.8;margin-bottom:20px;}
+.menu-price-wrap{display:flex;align-items:baseline;gap:4px;}
+.menu-yen{font-size:13px;color:var(--amber);}
+.menu-price{font-family:'Zen Old Mincho',serif;font-size:32px;font-weight:900;color:var(--amber);}
+.menu-tax{font-size:11px;color:rgba(255,255,255,.3);}
+.menu-badge{position:absolute;top:16px;right:16px;background:var(--red);color:white;font-size:10px;padding:4px 10px;font-weight:700;letter-spacing:1px;}
+
+/* STORY */
+.story{background:var(--dark);padding:120px 40px;overflow:hidden;}
+.story-inner{max-width:920px;margin:0 auto;}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:64px;}
+.story-blocks{display:flex;flex-direction:column;gap:1px;}
+.story-block{background:rgba(255,255,255,.03);padding:24px 28px;border-left:2px solid var(--amber);transition:background .3s;}
+.story-block:hover{background:rgba(200,118,26,.06);}
+.story-year{font-family:'Zen Old Mincho',serif;font-size:28px;font-weight:900;color:var(--amber);}
+.story-event{font-size:14px;color:rgba(255,255,255,.65);margin-top:4px;line-height:1.6;}
+.story-text-area .concept-label{margin-bottom:20px;}
+.story-heading{font-family:'Zen Old Mincho',serif;font-size:clamp(24px,4vw,40px);font-weight:900;color:white;line-height:1.5;margin-bottom:24px;}
+.story-body{font-size:14px;color:rgba(255,255,255,.5);line-height:2.2;font-weight:300;}
+
+/* GALLERY */
+.gallery{background:var(--black);padding:120px 40px;}
+.gallery-grid{max-width:960px;margin:56px auto 0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto;gap:4px;}
+.g-item{aspect-ratio:1;overflow:hidden;cursor:pointer;position:relative;}
+.g-item:first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:auto;}
+.g-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:clamp(40px,8vw,80px);transition:transform .5s;position:relative;}
+.g-item:hover .g-bg{transform:scale(1.05);}
+.g-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .3s;display:flex;align-items:center;justify-content:center;color:white;font-size:13px;letter-spacing:2px;}
+.g-item:hover .g-overlay{opacity:1;}
+.g-colors{
+  --c1:#2a1a0a; --c2:#1a0d04; --c3:#0d1a2a;
+  --c4:#1a2a0a; --c5:#2a0a1a;
+}
+
+/* ACCESS */
+.access{background:var(--dark);padding:120px 40px;}
+.access-inner{max-width:920px;margin:0 auto;}
+.access-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-top:64px;}
+.access-info{display:flex;flex-direction:column;gap:1px;}
+.access-row{background:rgba(255,255,255,.03);padding:20px 24px;display:flex;gap:20px;border-bottom:1px solid rgba(255,255,255,.05);}
+.access-key{font-size:12px;color:var(--amber);letter-spacing:2px;min-width:72px;padding-top:2px;}
+.access-val{font-size:14px;color:rgba(255,255,255,.7);line-height:1.8;}
+.hours-grid{display:grid;grid-template-columns:1fr auto;gap:8px;font-size:13px;}
+.hours-day{color:rgba(255,255,255,.55);}
+.hours-time{color:rgba(255,255,255,.8);text-align:right;}
+.hours-closed{color:rgba(255,255,255,.25);}
+.map-frame{background:rgba(255,255,255,.03);border:1px solid rgba(200,118,26,.2);height:300px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:rgba(255,255,255,.35);font-size:14px;border-radius:2px;}
+.map-icon{font-size:40px;opacity:.5;}
+
+/* RESERVE */
+.reserve{background:linear-gradient(135deg,#1a0d04,#2d1a08,#1a0d04);padding:120px 40px;position:relative;overflow:hidden;}
+.reserve::before{content:'予約';font-family:'Zen Old Mincho',serif;font-size:280px;font-weight:900;color:rgba(200,118,26,.04);position:absolute;right:0;top:50%;transform:translateY(-50%);line-height:1;pointer-events:none;}
+.reserve-inner{max-width:640px;margin:0 auto;position:relative;z-index:1;}
+.reserve-box{background:rgba(255,255,255,.04);border:1px solid rgba(200,118,26,.25);padding:52px;margin-top:56px;}
+.form-group{margin-bottom:24px;}
+.form-label{display:block;font-size:12px;letter-spacing:2px;color:var(--amber);margin-bottom:10px;}
+.req{color:var(--red);margin-left:6px;}
+.form-input,.form-select,.form-textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:white;padding:14px 16px;font-size:14px;font-family:'Noto Sans JP',sans-serif;outline:none;transition:border-color .3s;border-radius:0;}
+.form-input::placeholder{color:rgba(255,255,255,.2);}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--amber);}
+.form-select option{background:var(--dark);color:white;}
+.form-textarea{height:110px;resize:vertical;}
+.form-row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.submit-btn{width:100%;background:var(--amber);color:var(--black);border:none;padding:18px;font-size:16px;font-weight:700;font-family:'Noto Sans JP',sans-serif;letter-spacing:3px;cursor:pointer;transition:all .3s;margin-top:8px;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);}
+.submit-btn:hover{background:var(--amber-light);transform:translateY(-1px);}
+.tel-cta{text-align:center;margin-top:40px;padding-top:40px;border-top:1px solid rgba(255,255,255,.08);}
+.tel-cta p{font-size:12px;color:rgba(255,255,255,.4);letter-spacing:2px;margin-bottom:10px;}
+.tel-num{font-family:'Zen Old Mincho',serif;font-size:40px;font-weight:900;color:var(--amber);letter-spacing:4px;}
+.tel-note{font-size:11px;color:rgba(255,255,255,.3);margin-top:6px;letter-spacing:1px;}
+
+/* FOOTER */
+footer{background:#060403;padding:56px 40px 32px;border-top:1px solid rgba(200,118,26,.15);}
+.footer-inner{max-width:920px;margin:0 auto;}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:48px;flex-wrap:wrap;gap:32px;}
+.footer-logo{font-family:'Zen Old Mincho',serif;font-size:32px;font-weight:900;color:var(--amber);letter-spacing:6px;}
+.footer-logo-sub{font-size:11px;color:rgba(255,255,255,.3);letter-spacing:3px;margin-top:6px;}
+.footer-nav{display:flex;flex-direction:column;gap:12px;}
+.footer-nav a{font-size:13px;color:rgba(255,255,255,.4);text-decoration:none;letter-spacing:1px;transition:color .2s;}
+.footer-nav a:hover{color:var(--amber);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:24px;text-align:center;font-size:11px;color:rgba(255,255,255,.2);letter-spacing:1px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--amber);color:var(--black);padding:14px 32px;font-size:14px;font-weight:700;letter-spacing:1px;opacity:0;transition:all .4s;z-index:999;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* FADE */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s,transform .8s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* MOBILE */
+@media(max-width:768px){
+  header{padding:0 20px;}
+  nav{display:none;}
+  .menu-btn{display:flex;}
+  .concept-inner,.story-grid,.access-grid{grid-template-columns:1fr;gap:40px;}
+  .concept::before{font-size:180px;}
+  .gallery-grid{grid-template-columns:1fr 1fr;}
+  .g-item:first-child{grid-column:span 2;aspect-ratio:2/1;}
+  .reserve-box{padding:28px 20px;}
+  .form-row2{grid-template-columns:1fr;}
+  .stat-row{grid-template-columns:repeat(3,1fr);}
+  .footer-top{flex-direction:column;}
+  .menu-tabs{flex-wrap:wrap;}
+  .mtab{padding:10px 18px;font-size:12px;}
+  section{padding:80px 20px;}
+  .concept,.menu-section,.story,.gallery,.access,.reserve{padding:80px 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-kanji">蒼</div>
+  <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" onclick="closeMobileNav()">✕</button>
+  <a href="#concept" onclick="closeMobileNav()">こだわり</a>
+  <a href="#menu-section" onclick="closeMobileNav()">メニュー</a>
+  <a href="#story" onclick="closeMobileNav()">ストーリー</a>
+  <a href="#access" onclick="closeMobileNav()">アクセス</a>
+  <a href="#reserve" onclick="closeMobileNav()">ご予約</a>
+</div>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="logo">
+    <div>
+      <div class="logo-en">蒼天</div>
+      <div class="logo-jp">SOTEN RAMEN</div>
+    </div>
+  </div>
+  <nav>
+    <a href="#concept">こだわり</a>
+    <a href="#menu-section">メニュー</a>
+    <a href="#story">ストーリー</a>
+    <a href="#access">アクセス</a>
+    <a href="#reserve" class="nav-reserve">ご予約</a>
+  </nav>
+  <div class="menu-btn" onclick="openMobileNav()">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="steam-wrap" id="steamWrap"></div>
+  <div class="grid-lines"></div>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">AUTHENTIC JAPANESE RAMEN</div>
+    <div class="hero-kanji">蒼天</div>
+    <div class="hero-sub">本 格 醤 油 ラ ー メ ン</div>
+    <div class="hero-btns">
+      <a href="#menu-section" class="btn-gold">メニューを見る</a>
+      <a href="#reserve" class="btn-ghost">ご予約はこちら</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<section class="concept" id="concept">
+  <div class="concept-inner">
+    <div class="reveal">
+      <div class="concept-label">OUR CONCEPT</div>
+      <h2 class="concept-title">一杯に、<br>すべてを<br>込める。</h2>
+      <p class="concept-text">丑三つ時から仕込む鶏ガラと豚骨のスープ。国産小麦100%の自家製麺。地元農家から届く旬の野菜。妥協を許さない素材と、職人の技が生み出す一杯。蒼天のラーメンは、食べた人の記憶に残り続けます。</p>
+    </div>
+    <div class="reveal">
+      <div class="bowl-art">🍜</div>
+    </div>
+  </div>
+  <div class="stat-row reveal">
+    <div class="stat"><div class="stat-num">18<span class="stat-unit">時間</span></div><div class="stat-label">スープ仕込み時間</div></div>
+    <div class="stat"><div class="stat-num">100<span class="stat-unit">%</span></div><div class="stat-label">国産小麦自家製麺</div></div>
+    <div class="stat"><div class="stat-num">15<span class="stat-unit">年</span></div><div class="stat-label">職人経験年数</div></div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu-section">
+  <div class="section-header reveal">
+    <div class="sec-label">MENU</div>
+    <h2 class="sec-title">メニュー</h2>
+  </div>
+  <div class="menu-tabs reveal">
+    <button class="mtab active" onclick="switchMenu('ramen',this)">ラーメン</button>
+    <button class="mtab" onclick="switchMenu('side',this)">サイドメニュー</button>
+    <button class="mtab" onclick="switchMenu('drink',this)">ドリンク</button>
+  </div>
+  <div class="menu-panels">
+    <div class="menu-panel active" id="panel-ramen">
+      <div class="menu-item">
+        <div class="menu-badge">人気No.1</div>
+        <div class="menu-tag">SIGNATURE</div>
+        <div class="menu-name">蒼天醤油ラーメン</div>
+        <div class="menu-desc">18時間仕込みの黄金スープに自家製太麺。チャーシュー2枚・味玉・メンマ入り。</div>
+        <div class="menu-price-wrap"><span class="menu-yen">¥</span><span class="menu-price">980</span><span class="menu-tax">（税込）</span></div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-tag">CLASSIC</div>
+        <div class="menu-name">塩ラーメン</div>
+        <div class="menu-desc">澄んだ鶏白湯ベースに繊細な塩ダレ。あっさりしながら深みのある一杯。</div>
+        <div class="menu-price-wrap"><span class="menu-yen">¥</span><span class="menu-price">880</span><span class="menu-tax">（税込）</span></div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-badge">NEW</div>
+        <div class="menu-tag">SEASONAL</div>
+        <div class="menu-name">濃厚味噌ラーメン</div>
+        <div class="menu-desc">北海道産味噌を3種ブレンド。コク深いスープが太麺によく絡む季節限定の一杯。</div>
+        <div class="menu-price-wrap"><span class="menu-yen">¥</span><span class="menu-price">1,050</span><span class="menu-tax">（税込）</span></div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-tag">PREMIUM</div>
+        <div class="menu-name">特製全部のせ</div>
+        <div class="menu-desc">チャーシュー4枚・味玉2個・海苔・ネギ・メンマ・バター。蒼天の全てが一杯に。</div>
+        <div class="menu-price-wrap"><span class="menu-yen">¥</span><span class="menu-price">1,480</span><span class="menu-tax">（税込）</span></div>
+      </div>
+    </div>
+    <div class="menu-panel" id="panel-side">
+      <div class="menu-item">
+        <div class="menu-tag">POPULAR</div>
+        <div class="menu-name">半チャーハン</div>
+        <div class="menu-desc">パラパラ炒飯。ラーメンとのセットにおすすめ。</div>
+        <div class="menu-price-wrap"><span class="menu-yen">¥</span><span class="menu-price">350</span><span class="menu-tax">（税込）</span></div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-tag">POPULAR</div>
+        <div class="menu-name">餃子（5個）</div>
+        <div class="menu-desc">国産豚と白菜たっぷり。皮はパリパリ、中はジューシー。</div>
+        <div class="menu-price-wrap"><span class="menu-yen">¥</span><span class="menu-price">420</span><span class="menu-tax">（税込）</span></div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-tag">TOPPING</div>
+        <div class="menu-name">追加トッピング各種</div>
+        <div class="menu-desc">チャーシュー・味玉・メンマ・のり・バター 各150円〜</div>
+        <div class="menu-price-wrap"><span class="menu-yen">¥</span><span class="menu-price">150</span><span class="menu-tax">〜（税込）</span></div>
+      </div>
+    </div>
+    <div class="menu-panel" id="panel-drink">
+      <div class="menu-item">
+        <div class="menu-tag">SOFT</div>
+        <div class="menu-name">瓶ビール</div>
+        <div class="menu-desc">大瓶・小瓶からお選びいただけます。</div>
+        <div class="menu-price-wrap"><span class="menu-yen">¥</span><span class="menu-price">550</span><span class="menu-tax">〜（税込）</span></div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-tag">SOFT</div>
+        <div class="menu-name">ソフトドリンク</div>
+        <div class="menu-desc">コーラ・ウーロン茶・オレンジジュース</div>
+        <div class="menu-price-wrap"><span class="menu-yen">¥</span><span class="menu-price">200</span><span class="menu-tax">（税込）</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="story-inner">
+    <div class="section-header reveal">
+      <div class="sec-label">OUR STORY</div>
+      <h2 class="sec-title" style="color:white;">物語</h2>
+    </div>
+    <div class="story-grid">
+      <div class="story-text-area reveal">
+        <div class="concept-label">職人の歩み</div>
+        <h3 class="story-heading">15年の修行が<br>生んだ一杯</h3>
+        <p class="story-body">東京・神田の老舗ラーメン店で10年の修行を積んだ後、故郷でこの店を開きました。「毎日食べても飽きない」という信念のもと、奇をてらわず、素材と向き合い続けています。スープは今日も18時間かけて仕込んでいます。</p>
+      </div>
+      <div class="story-blocks reveal">
+        <div class="story-block"><div class="story-year">2008</div><div class="story-event">東京・神田の老舗ラーメン店に入門</div></div>
+        <div class="story-block"><div class="story-year">2015</div><div class="story-event">独立を決意。全国のラーメン店を食べ歩き</div></div>
+        <div class="story-block"><div class="story-year">2018</div><div class="story-event">「麺や 蒼天」として地元○○市にオープン</div></div>
+        <div class="story-block"><div class="story-year">2023</div><div class="story-event">食べログ百名店に選出</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery">
+  <div class="section-header reveal">
+    <div class="sec-label">GALLERY</div>
+    <h2 class="sec-title">ギャラリー</h2>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="g-item" style="background:linear-gradient(135deg,#2a1a0a,#3d2b1a);">
+      <div class="g-bg" style="font-size:100px;min-height:300px;">🍜</div>
+      <div class="g-overlay">蒼天醤油ラーメン</div>
+    </div>
+    <div class="g-item" style="background:linear-gradient(135deg,#1a1a2a,#2a2a3d);">
+      <div class="g-bg">🥢</div>
+      <div class="g-overlay">自家製麺</div>
+    </div>
+    <div class="g-item" style="background:linear-gradient(135deg,#1a2a1a,#2a3d2a);">
+      <div class="g-bg">🫙</div>
+      <div class="g-overlay">特製タレ</div>
+    </div>
+    <div class="g-item" style="background:linear-gradient(135deg,#2a1a2a,#3d2a3d);">
+      <div class="g-bg">🥩</div>
+      <div class="g-overlay">低温調理チャーシュー</div>
+    </div>
+    <div class="g-item" style="background:linear-gradient(135deg,#2a2a1a,#3d3d1a);">
+      <div class="g-bg">🍳</div>
+      <div class="g-overlay">特製味玉</div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section class="access" id="access">
+  <div class="access-inner">
+    <div class="section-header reveal">
+      <div class="sec-label">ACCESS</div>
+      <h2 class="sec-title">アクセス</h2>
+    </div>
+    <div class="access-grid">
+      <div class="access-info reveal">
+        <div class="access-row"><div class="access-key">店名</div><div class="access-val">麺や 蒼天</div></div>
+        <div class="access-row"><div class="access-key">住所</div><div class="access-val">○○県○○市○○町1-2-3<br>○○駅から徒歩3分</div></div>
+        <div class="access-row"><div class="access-key">電話</div><div class="access-val">000-0000-0000</div></div>
+        <div class="access-row">
+          <div class="access-key">営業時間</div>
+          <div class="access-val">
+            <div class="hours-grid">
+              <span class="hours-day">月〜金</span><span class="hours-time">11:30〜14:30 / 18:00〜22:00</span>
+              <span class="hours-day">土・日・祝</span><span class="hours-time">11:00〜21:00（通し）</span>
+              <span class="hours-day">定休日</span><span class="hours-time hours-closed">火曜日</span>
+            </div>
+          </div>
+        </div>
+        <div class="access-row"><div class="access-key">席数</div><div class="access-val">カウンター8席・テーブル16席</div></div>
+        <div class="access-row"><div class="access-key">駐車場</div><div class="access-val">近隣有料Pをご利用ください</div></div>
+      </div>
+      <div class="reveal">
+        <div class="map-frame">
+          <div class="map-icon">📍</div>
+          <div>地図はこちら</div>
+          <div style="font-size:12px;opacity:.5;margin-top:4px">○○市○○町1-2-3</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVE -->
+<section class="reserve" id="reserve">
+  <div class="reserve-inner">
+    <div class="section-header reveal">
+      <div class="sec-label">RESERVATION</div>
+      <h2 class="sec-title" style="color:white;">ご予約</h2>
+    </div>
+    <div class="reserve-box reveal">
+      <div class="form-group">
+        <label class="form-label">お名前<span class="req">*</span></label>
+        <input type="text" class="form-input" placeholder="山田 太郎">
+      </div>
+      <div class="form-row2">
+        <div class="form-group">
+          <label class="form-label">電話番号<span class="req">*</span></label>
+          <input type="tel" class="form-input" placeholder="000-0000-0000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">人数<span class="req">*</span></label>
+          <select class="form-select">
+            <option>1名</option><option>2名</option><option>3名</option>
+            <option>4名</option><option>5名以上</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row2">
+        <div class="form-group">
+          <label class="form-label">ご希望日<span class="req">*</span></label>
+          <input type="date" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">ご希望時間</label>
+          <select class="form-select">
+            <option>11:30</option><option>12:00</option><option>12:30</option>
+            <option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ご要望・アレルギー等</label>
+        <textarea class="form-textarea" placeholder="アレルギーやご要望があればご記入ください"></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitForm()">予約リクエストを送る</button>
+      <div class="tel-cta">
+        <p>お電話でのご予約</p>
+        <div class="tel-num">000-0000-0000</div>
+        <div class="tel-note">営業時間内にお気軽にお電話ください</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">蒼天</div>
+        <div class="footer-logo-sub">SOTEN RAMEN</div>
+      </div>
+      <div class="footer-nav">
+        <a href="#concept">こだわり</a>
+        <a href="#menu-section">メニュー</a>
+        <a href="#story">ストーリー</a>
+        <a href="#access">アクセス</a>
+        <a href="#reserve">ご予約</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 麺や 蒼天 All Rights Reserved.</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">ご予約リクエストを受け付けました！</div>
+
+<script>
+// LOADER
+window.addEventListener('load', () => {
+  const fill = document.getElementById('loaderFill');
+  fill.style.width = '100%';
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hide');
+  }, 1000);
+});
+
+// HEADER SCROLL
+window.addEventListener('scroll', () => {
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// STEAM
+const sw = document.getElementById('steamWrap');
+for(let i = 0; i < 12; i++) {
+  const s = document.createElement('div');
+  s.className = 'steam';
+  const left = 20 + Math.random() * 60;
+  const dur = 4 + Math.random() * 6;
+  const delay = Math.random() * 4;
+  const h = 200 + Math.random() * 300;
+  s.style.cssText = `left:${left}%;height:${h}px;animation-duration:${dur}s;animation-delay:-${delay}s;`;
+  sw.appendChild(s);
+}
+
+// MOBILE NAV
+function openMobileNav() { document.getElementById('mobileNav').classList.add('open'); }
+function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); }
+
+// MENU TABS
+function switchMenu(id, el) {
+  document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.mtab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+// FORM SUBMIT
+function submitForm() {
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3500);
+}
+
+// REVEAL ON SCROLL
+const ro = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if(e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>
