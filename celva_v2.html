@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CELVA | Wear your story.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --white:#faf9f7;
+  --cream:#f3ede4;
+  --terra:#c4714a;
+  --terra-light:#e8a882;
+  --terra-dim:rgba(196,113,74,.12);
+  --charcoal:#2c2b29;
+  --mid:#6b6560;
+  --light:#b8b0a8;
+  --border:rgba(44,43,41,.1);
+  --border2:rgba(44,43,41,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--white);color:var(--charcoal);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* ===== GLOBAL NAV ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(250,249,247,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border2);transition:all .3s;}
+nav.scrolled{height:60px;background:rgba(250,249,247,.99);}
+.nav-logo{font-family:'Josefin Sans',sans-serif;font-size:22px;font-weight:300;letter-spacing:8px;color:var(--charcoal);text-decoration:none;cursor:pointer;}
+.nav-links{display:flex;gap:0;align-items:center;}
+.nav-link{font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:3px;color:var(--mid);text-decoration:none;padding:8px 20px;cursor:pointer;transition:color .2s;background:none;border:none;}
+.nav-link:hover,.nav-link.active{color:var(--charcoal);}
+.nav-cta{font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:3px;background:var(--charcoal);color:var(--white);padding:10px 24px;border:none;cursor:pointer;transition:all .2s;margin-left:16px;}
+.nav-cta:hover{background:var(--terra);}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;}
+.nav-burger span{width:24px;height:1px;background:var(--charcoal);display:block;transition:all .3s;}
+.sp-nav{display:none;position:fixed;inset:0;background:var(--white);z-index:500;flex-direction:column;align-items:center;justify-content:center;gap:40px;}
+.sp-nav.open{display:flex;}
+.sp-nav-link{font-family:'Josefin Sans',sans-serif;font-size:14px;letter-spacing:4px;color:var(--charcoal);cursor:pointer;background:none;border:none;}
+.sp-close{position:absolute;top:24px;right:32px;font-size:28px;background:none;border:none;cursor:pointer;color:var(--mid);}
+
+/* ===== PAGES ===== */
+.page{display:none;min-height:100vh;padding-top:72px;}
+.page.active{display:block;}
+
+/* ===== HOME ===== */
+.hero{position:relative;height:calc(100vh - 72px);min-height:600px;overflow:hidden;display:flex;align-items:flex-end;}
+.hero-img{position:absolute;inset:0;background:linear-gradient(135deg,#2c2b29 0%,#4a3d35 40%,#6b5040 100%);}
+.hero-img img{width:100%;height:100%;object-fit:cover;opacity:.85;filter:brightness(.9);}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(44,43,41,.7) 0%,rgba(44,43,41,.1) 60%,transparent 100%);}
+.hero-content{position:relative;z-index:1;padding:0 80px 80px;}
+.hero-tag{font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:5px;color:var(--terra-light);margin-bottom:20px;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,8vw,100px);font-weight:300;color:var(--white);line-height:1.05;letter-spacing:-1px;margin-bottom:24px;}
+.hero-title em{font-style:italic;color:var(--terra-light);}
+.hero-sub{font-size:14px;color:rgba(250,249,247,.7);font-weight:300;line-height:1.8;max-width:400px;margin-bottom:40px;}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;}
+.btn-main{font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:3px;background:var(--terra);color:var(--white);padding:14px 36px;border:none;cursor:pointer;transition:all .3s;}
+.btn-main:hover{background:var(--terra-light);}
+.btn-outline{font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:3px;background:transparent;color:var(--white);padding:13px 32px;border:1px solid rgba(250,249,247,.5);cursor:pointer;transition:all .3s;}
+.btn-outline:hover{border-color:var(--white);background:rgba(250,249,247,.1);}
+.hero-scroll{position:absolute;right:48px;bottom:48px;display:flex;flex-direction:column;align-items:center;gap:12px;z-index:1;}
+.hero-scroll span{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:4px;color:rgba(250,249,247,.6);writing-mode:vertical-rl;}
+.hero-scroll-line{width:1px;height:60px;background:linear-gradient(to bottom,transparent,rgba(250,249,247,.5));animation:scrollDown 2s infinite;}
+@keyframes scrollDown{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.01%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* CONCEPT */
+.concept{padding:120px 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.concept-text .label{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;color:var(--terra);margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.concept-text .label::before{content:'';width:32px;height:1px;background:var(--terra);}
+.concept-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,52px);font-weight:300;line-height:1.3;margin-bottom:32px;}
+.concept-title em{font-style:italic;color:var(--terra);}
+.concept-body{font-size:14px;color:var(--mid);line-height:2;font-weight:300;}
+.concept-img{position:relative;aspect-ratio:3/4;overflow:hidden;}
+.concept-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease;}
+.concept-img:hover img{transform:scale(1.03);}
+.concept-img-tag{position:absolute;bottom:24px;left:24px;background:var(--white);padding:12px 20px;}
+.concept-img-tag p{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:3px;color:var(--terra);}
+
+/* COLLECTION */
+.collection{padding:80px;background:var(--cream);}
+.sec-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;}
+.sec-label{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;color:var(--terra);margin-bottom:8px;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;line-height:1.2;}
+.sec-link{font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:3px;color:var(--mid);text-decoration:none;cursor:pointer;display:flex;align-items:center;gap:8px;border:none;background:none;}
+.sec-link::after{content:'→';}
+.sec-link:hover{color:var(--terra);}
+.collection-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.col-card{position:relative;overflow:hidden;background:var(--white);}
+.col-card-img{aspect-ratio:3/4;overflow:hidden;position:relative;}
+.col-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+.col-card:hover .col-card-img img{transform:scale(1.04);}
+.col-card-tag{position:absolute;top:20px;left:20px;background:var(--terra);color:var(--white);font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:2px;padding:4px 12px;}
+.col-card-body{padding:24px;}
+.col-card-category{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:3px;color:var(--terra);margin-bottom:8px;}
+.col-card-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin-bottom:4px;}
+.col-card-price{font-size:13px;color:var(--mid);font-weight:300;}
+
+/* VALUES */
+.values{padding:120px 80px;display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start;}
+.values-left .sec-label{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;color:var(--terra);margin-bottom:16px;}
+.values-left .sec-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;line-height:1.3;}
+.values-right{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.value-item{padding:40px 36px;background:var(--cream);transition:background .3s;}
+.value-item:hover{background:var(--charcoal);}
+.value-item:hover .value-title,.value-item:hover .value-body{color:var(--white);}
+.value-item:hover .value-num{color:var(--terra-light);}
+.value-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--border);line-height:1;margin-bottom:20px;transition:color .3s;}
+.value-title{font-family:'Josefin Sans',sans-serif;font-size:13px;letter-spacing:3px;color:var(--charcoal);margin-bottom:12px;transition:color .3s;}
+.value-body{font-size:13px;color:var(--mid);line-height:1.9;font-weight:300;transition:color .3s;}
+
+/* BANNER */
+.banner{height:360px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;}
+.banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.banner-overlay{position:absolute;inset:0;background:rgba(44,43,41,.55);}
+.banner-content{position:relative;z-index:1;padding:40px;}
+.banner-label{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;color:var(--terra-light);margin-bottom:16px;}
+.banner-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,56px);font-weight:300;color:var(--white);line-height:1.2;margin-bottom:28px;}
+.banner-title em{font-style:italic;}
+
+/* NEWS */
+.news-sec{padding:80px;}
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:48px;}
+.news-card{cursor:pointer;}
+.news-card-img{aspect-ratio:16/10;overflow:hidden;margin-bottom:20px;}
+.news-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.news-card:hover .news-card-img img{transform:scale(1.04);}
+.news-date{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:3px;color:var(--terra);margin-bottom:8px;}
+.news-cat{display:inline-block;font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:2px;background:var(--terra-dim);color:var(--terra);padding:3px 10px;margin-bottom:12px;}
+.news-title{font-size:14px;font-weight:400;line-height:1.7;color:var(--charcoal);}
+
+/* ===== ABOUT PAGE ===== */
+.about-hero{height:480px;position:relative;overflow:hidden;display:flex;align-items:center;}
+.about-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.7);}
+.about-hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(44,43,41,.6) 0%,transparent 60%);}
+.about-hero-content{position:relative;z-index:1;padding:0 80px;}
+.page-hero-label{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;color:var(--terra-light);margin-bottom:16px;}
+.page-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,6vw,72px);font-weight:300;color:var(--white);line-height:1.1;}
+.page-hero-title em{font-style:italic;}
+
+.about-message{padding:100px 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.about-msg-text .quote{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2.5vw,28px);font-weight:300;font-style:italic;line-height:1.7;color:var(--charcoal);margin-bottom:32px;padding-left:24px;border-left:2px solid var(--terra);}
+.about-msg-text p{font-size:14px;color:var(--mid);line-height:2;font-weight:300;margin-bottom:16px;}
+.about-msg-text .sign{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--terra);margin-top:32px;}
+.about-msg-img{aspect-ratio:4/5;overflow:hidden;}
+.about-msg-img img{width:100%;height:100%;object-fit:cover;}
+
+.about-philosophy{padding:80px;background:var(--charcoal);}
+.about-philosophy .sec-title{color:var(--white);}
+.about-philosophy .sec-label{color:var(--terra-light);}
+.phil-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(250,249,247,.1);margin-top:56px;}
+.phil-item{padding:48px 36px;background:var(--charcoal);}
+.phil-num{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:rgba(250,249,247,.08);line-height:1;margin-bottom:24px;}
+.phil-title{font-family:'Josefin Sans',sans-serif;font-size:12px;letter-spacing:4px;color:var(--terra-light);margin-bottom:16px;}
+.phil-body{font-size:13px;color:rgba(250,249,247,.6);line-height:1.9;font-weight:300;}
+
+.about-history{padding:100px 80px;}
+.timeline{margin-top:56px;position:relative;padding-left:120px;}
+.timeline::before{content:'';position:absolute;left:60px;top:0;bottom:0;width:1px;background:var(--border);}
+.tl-item{position:relative;margin-bottom:48px;}
+.tl-year{position:absolute;left:-120px;top:4px;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--terra);width:80px;text-align:right;}
+.tl-dot{position:absolute;left:-64px;top:8px;width:8px;height:8px;border-radius:50%;background:var(--terra);transform:translateX(-50%);}
+.tl-title{font-family:'Josefin Sans',sans-serif;font-size:12px;letter-spacing:3px;color:var(--charcoal);margin-bottom:8px;}
+.tl-body{font-size:13px;color:var(--mid);line-height:1.8;font-weight:300;}
+
+/* ===== COLLECTION PAGE ===== */
+.col-page-hero{height:400px;position:relative;overflow:hidden;display:flex;align-items:center;}
+.col-page-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6);}
+.col-page-hero-overlay{position:absolute;inset:0;background:rgba(44,43,41,.3);}
+.col-page-hero-content{position:relative;z-index:1;padding:0 80px;}
+
+.collection-filters{padding:40px 80px 0;display:flex;gap:0;border-bottom:1px solid var(--border);}
+.filter-btn{font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:3px;padding:12px 28px;border:none;background:none;color:var(--mid);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;}
+.filter-btn.active,.filter-btn:hover{color:var(--charcoal);border-bottom-color:var(--terra);}
+
+.col-full-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:48px 80px 80px;}
+.col-full-card{cursor:pointer;}
+.col-full-card-img{aspect-ratio:3/4;overflow:hidden;background:var(--cream);margin-bottom:16px;}
+.col-full-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.col-full-card:hover .col-full-card-img img{transform:scale(1.04);}
+.col-full-cat{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:3px;color:var(--terra);margin-bottom:6px;}
+.col-full-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;margin-bottom:4px;}
+.col-full-price{font-size:13px;color:var(--mid);}
+
+/* ===== SUSTAINABILITY PAGE ===== */
+.sustain-hero{height:480px;position:relative;overflow:hidden;display:flex;align-items:center;}
+.sustain-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.65);}
+.sustain-hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(44,43,41,.6),transparent);}
+.sustain-hero-content{position:relative;z-index:1;padding:0 80px;}
+
+.sustain-intro{padding:100px 80px;max-width:800px;margin:0 auto;text-align:center;}
+.sustain-intro .big-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3vw,36px);font-weight:300;font-style:italic;line-height:1.6;color:var(--charcoal);margin-bottom:32px;}
+.sustain-intro p{font-size:14px;color:var(--mid);line-height:2;font-weight:300;}
+
+.sustain-pillars{padding:0 80px 100px;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.pillar{padding:0;background:var(--cream);overflow:hidden;}
+.pillar-img{height:220px;overflow:hidden;}
+.pillar-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s;}
+.pillar:hover .pillar-img img{transform:scale(1.04);}
+.pillar-body-wrap{padding:36px;}
+.pillar-title{font-family:'Josefin Sans',sans-serif;font-size:12px;letter-spacing:3px;color:var(--terra);margin-bottom:16px;}
+.pillar-body{font-size:13px;color:var(--mid);line-height:1.9;font-weight:300;}
+.pillar-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--terra);margin-top:24px;line-height:1;}
+.pillar-num-label{font-size:12px;color:var(--mid);}
+
+/* STORE MAP */
+.store-list{display:flex;flex-direction:column;gap:16px;margin-top:32px;}
+.store-item{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;background:rgba(250,249,247,.06);border:1px solid rgba(250,249,247,.1);transition:all .2s;}
+.store-item:hover{background:rgba(250,249,247,.1);}
+.store-item-left{}
+.store-name{font-family:'Josefin Sans',sans-serif;font-size:12px;letter-spacing:3px;color:var(--white);margin-bottom:4px;}
+.store-addr{font-size:12px;color:rgba(250,249,247,.5);font-weight:300;}
+.store-map-btn{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:2px;color:var(--terra-light);border:1px solid rgba(196,113,74,.4);padding:8px 16px;text-decoration:none;flex-shrink:0;transition:all .2s;}
+.store-map-btn:hover{background:var(--terra);color:var(--white);border-color:var(--terra);}
+
+/* FOUNDER */
+.founder-hero{height:480px;position:relative;overflow:hidden;display:flex;align-items:center;}
+.founder-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6);}
+.founder-hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(44,43,41,.7),transparent);}
+.founder-hero-content{position:relative;z-index:1;padding:0 80px;}
+.founder-main{padding:100px 80px;display:grid;grid-template-columns:380px 1fr;gap:64px;align-items:start;}
+.founder-photo-wrap{position:relative;}
+.founder-photo{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;display:block;}
+.founder-photo-caption{position:absolute;bottom:0;left:0;right:0;background:var(--charcoal);padding:20px 24px;}
+.founder-caption-name{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--white);font-weight:300;}
+.founder-caption-title{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:3px;color:var(--terra-light);margin-top:4px;}
+.founder-info{}
+.founder-tag{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;color:var(--terra);margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.founder-tag::before{content:'';width:32px;height:1px;background:var(--terra);}
+.founder-name-big{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-weight:300;line-height:1.2;margin-bottom:8px;}
+.founder-name-en{font-family:'Josefin Sans',sans-serif;font-size:12px;letter-spacing:4px;color:var(--mid);margin-bottom:40px;}
+.founder-bio{font-size:14px;color:var(--mid);line-height:2.1;font-weight:300;margin-bottom:24px;}
+.founder-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;font-weight:300;line-height:1.6;color:var(--charcoal);padding:28px 32px;border-left:3px solid var(--terra);background:var(--cream);margin:32px 0;}
+.founder-data{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px;padding-top:40px;border-top:1px solid var(--border);}
+.fd-item .fd-label{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:3px;color:var(--terra);margin-bottom:6px;}
+.fd-item .fd-val{font-size:13px;color:var(--charcoal);font-weight:300;line-height:1.6;}
+.founder-career{padding:0 80px 80px;background:var(--cream);}
+.career-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;padding:64px 0 40px;}
+.career-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.career-item{background:var(--white);padding:32px 28px;}
+.career-year{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--terra);line-height:1;margin-bottom:12px;}
+.career-event{font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:2px;color:var(--charcoal);margin-bottom:8px;}
+.career-detail{font-size:12px;color:var(--mid);line-height:1.8;font-weight:300;}
+@media(max-width:900px){
+  .founder-main{grid-template-columns:1fr;padding:56px 32px;}
+  .founder-hero-content{padding:0 32px;}
+  .founder-career{padding:0 32px 56px;}
+  .career-grid{grid-template-columns:1fr;}
+  .founder-data{grid-template-columns:1fr;}
+}
+
+/* ===== NEWS PAGE ===== */
+.news-page{padding:80px;}
+.news-full-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:40px;margin-top:48px;}
+.news-full-card{display:grid;grid-template-columns:200px 1fr;gap:24px;padding-bottom:40px;border-bottom:1px solid var(--border);cursor:pointer;}
+.news-full-card-img{aspect-ratio:4/3;overflow:hidden;}
+.news-full-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.news-full-card:hover .news-full-card-img img{transform:scale(1.04);}
+.news-full-body{}
+.news-full-meta{display:flex;gap:12px;align-items:center;margin-bottom:12px;}
+.news-full-date{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:2px;color:var(--mid);}
+.news-full-cat{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:2px;background:var(--terra-dim);color:var(--terra);padding:2px 10px;}
+.news-full-title{font-size:15px;font-weight:400;line-height:1.7;color:var(--charcoal);margin-bottom:12px;}
+.news-full-excerpt{font-size:13px;color:var(--mid);line-height:1.8;font-weight:300;}
+
+/* ===== CONTACT PAGE ===== */
+.contact-page{padding:100px 80px;}
+.contact-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;max-width:1100px;margin:0 auto;}
+.contact-info .info-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;margin-bottom:24px;}
+.contact-info p{font-size:14px;color:var(--mid);line-height:2;font-weight:300;margin-bottom:32px;}
+.contact-detail{margin-top:40px;display:flex;flex-direction:column;gap:20px;}
+.cd-item .cd-label{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:3px;color:var(--terra);margin-bottom:6px;}
+.cd-item .cd-val{font-size:14px;color:var(--charcoal);font-weight:300;}
+.cf{display:flex;flex-direction:column;gap:20px;}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.cfg{display:flex;flex-direction:column;gap:6px;}
+.cfl{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:3px;color:var(--mid);}
+.cfl em{color:var(--terra);font-style:normal;}
+.cfi,.cfs,.cft{background:transparent;border:none;border-bottom:1px solid var(--border);padding:12px 0;font-size:14px;font-family:'Noto Sans JP',sans-serif;color:var(--charcoal);outline:none;transition:border-color .2s;font-weight:300;}
+.cfi:focus,.cfs:focus,.cft:focus{border-bottom-color:var(--terra);}
+.cft{resize:none;height:120px;}
+.cfsub{font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:4px;background:var(--charcoal);color:var(--white);border:none;padding:16px 40px;cursor:pointer;align-self:flex-start;transition:all .3s;margin-top:8px;}
+.cfsub:hover{background:var(--terra);}
+
+/* ===== FOOTER ===== */
+footer{background:var(--charcoal);padding:80px;margin-top:0;}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:64px;}
+.footer-logo{font-family:'Josefin Sans',sans-serif;font-size:20px;font-weight:200;letter-spacing:8px;color:var(--white);margin-bottom:16px;}
+.footer-tagline{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--terra-light);margin-bottom:20px;}
+.footer-desc{font-size:12px;color:rgba(250,249,247,.4);line-height:1.9;font-weight:300;}
+.footer-col-title{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:4px;color:var(--white);margin-bottom:20px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.footer-col ul li{font-size:12px;color:rgba(250,249,247,.4);cursor:pointer;transition:color .2s;font-weight:300;}
+.footer-col ul li:hover{color:var(--terra-light);}
+.footer-bot{border-top:1px solid rgba(250,249,247,.1);padding-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.footer-copy{font-size:11px;color:rgba(250,249,247,.3);font-family:'Josefin Sans',sans-serif;letter-spacing:2px;}
+.footer-sns{display:flex;gap:20px;}
+.footer-sns a{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(250,249,247,.4);text-decoration:none;transition:color .2s;}
+.footer-sns a:hover{color:var(--terra-light);}
+
+.toast{position:fixed;bottom:28px;right:28px;background:var(--charcoal);color:var(--white);padding:14px 28px;font-size:13px;font-family:'Josefin Sans',sans-serif;letter-spacing:2px;opacity:0;transform:translateY(8px);transition:all .4s;z-index:999;pointer-events:none;}
+.toast.show{opacity:1;transform:translateY(0);}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
+
+@media(max-width:900px){
+  nav{padding:0 24px;}
+  .nav-links{display:none;}.nav-burger{display:flex;}
+  .hero-content{padding:0 32px 56px;}
+  .concept,.about-message{grid-template-columns:1fr;padding:72px 32px;}
+  .collection,.news-sec,.news-page,.contact-page,.about-history,.sustain-pillars{padding:56px 32px;}
+  .collection-grid,.news-grid,.col-full-grid{grid-template-columns:repeat(2,1fr);}
+  .news-full-grid{grid-template-columns:1fr;}
+  .news-full-card{grid-template-columns:1fr;gap:16px;}
+  .values{grid-template-columns:1fr;padding:72px 32px;}
+  .values-right{grid-template-columns:1fr;}
+  .about-hero-content,.col-page-hero-content,.sustain-hero-content{padding:0 32px;}
+  .phil-grid,.sustain-pillars{grid-template-columns:1fr;}
+  .col-full-grid{padding:32px 32px 56px;}
+  .contact-wrap{grid-template-columns:1fr;padding:56px 32px;}
+  .footer-top{grid-template-columns:1fr 1fr;padding:0;gap:32px;}
+  footer{padding:56px 32px;}
+  .timeline{padding-left:80px;}
+  .tl-year{left:-80px;}
+  .timeline::before{left:40px;}
+  .tl-dot{left:-44px;}
+  .about-philosophy{padding:56px 32px;}
+  .sec-header{flex-direction:column;align-items:flex-start;gap:16px;}
+  .banner{height:280px;}
+  .hero-scroll{display:none;}
+  .cf-row{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .collection-grid,.col-full-grid{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- SP MENU -->
+<div class="sp-nav" id="spNav">
+  <button class="sp-close" onclick="document.getElementById('spNav').classList.remove('open')">✕</button>
+  <button class="sp-nav-link" onclick="showPage('home');document.getElementById('spNav').classList.remove('open')">HOME</button>
+  <button class="sp-nav-link" onclick="showPage('about');document.getElementById('spNav').classList.remove('open')">ABOUT</button>
+  <button class="sp-nav-link" onclick="showPage('collection');document.getElementById('spNav').classList.remove('open')">COLLECTION</button>
+  <button class="sp-nav-link" onclick="showPage('sustainability');document.getElementById('spNav').classList.remove('open')">SUSTAINABILITY</button>
+  <button class="sp-nav-link" onclick="showPage('founder');document.getElementById('spNav').classList.remove('open')">FOUNDER</button>
+  <button class="sp-nav-link" onclick="showPage('news');document.getElementById('spNav').classList.remove('open')">NEWS</button>
+  <button class="sp-nav-link" onclick="showPage('contact');document.getElementById('spNav').classList.remove('open')">CONTACT</button>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <span class="nav-logo" onclick="showPage('home')">CELVA</span>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showPage('home')" id="nav-home">HOME</button>
+    <button class="nav-link" onclick="showPage('about')" id="nav-about">ABOUT</button>
+    <button class="nav-link" onclick="showPage('collection')" id="nav-collection">COLLECTION</button>
+    <button class="nav-link" onclick="showPage('sustainability')" id="nav-sustainability">SUSTAINABILITY</button>
+    <button class="nav-link" onclick="showPage('founder')" id="nav-founder">FOUNDER</button>
+    <button class="nav-link" onclick="showPage('news')" id="nav-news">NEWS</button>
+    <button class="nav-cta" onclick="showPage('contact')">CONTACT</button>
+  </div>
+  <button class="nav-burger" onclick="document.getElementById('spNav').classList.add('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ========== HOME PAGE ========== -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-img">
+      <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=85&auto=format&fit=crop" alt="CELVA Hero" onerror="this.style.display='none'">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-tag">SS 2026 COLLECTION</div>
+      <h1 class="hero-title">Wear your<br><em>story.</em></h1>
+      <p class="hero-sub">素材と誠実に向き合い、着る人の物語を纏う。<br>CELVAは、日本の職人技とサステナブルな未来をつなぐアパレルブランドです。</p>
+      <div class="hero-btns">
+        <button class="btn-main" onclick="showPage('collection')">COLLECTION</button>
+        <button class="btn-outline" onclick="showPage('about')">OUR STORY</button>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>SCROLL</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <section class="concept reveal">
+    <div class="concept-text">
+      <div class="label">OUR CONCEPT</div>
+      <h2 class="concept-title">服は、<em>生き方</em>を<br>語る言語だ。</h2>
+      <p class="concept-body">CELVAは2018年に東京・代々木上原で生まれました。「良いものを、長く、愛着を持って着てほしい」という想いから、国内の熟練職人と共に、素材の選定から縫製まで一貫して管理しています。<br><br>流行を追うのではなく、時代を超えて愛される普遍的なデザインを。サステナビリティを理念の核に置き、着る人にとっても、地球にとっても、誠実であり続けることをCELVAは約束します。</p>
+    </div>
+    <div class="concept-img reveal d1">
+      <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=800&q=85&auto=format&fit=crop" alt="CELVA Concept" onerror="this.style.background='#e8e0d8'">
+      <div class="concept-img-tag"><p>ATELIER, TOKYO 2026</p></div>
+    </div>
+  </section>
+
+  <section class="collection reveal">
+    <div class="sec-header">
+      <div>
+        <div class="sec-label">COLLECTION</div>
+        <h2 class="sec-title">Spring / Summer<br>2026</h2>
+      </div>
+      <button class="sec-link" onclick="showPage('collection')">ALL ITEMS</button>
+    </div>
+    <div class="collection-grid">
+      <div class="col-card reveal">
+        <div class="col-card-img">
+          <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&q=85&auto=format&fit=crop" alt="Linen Shirt" onerror="this.style.background='#e8e0d8'">
+          <div class="col-card-tag">NEW</div>
+        </div>
+        <div class="col-card-body">
+          <div class="col-card-category">TOPS</div>
+          <div class="col-card-name">Natural Linen Shirt</div>
+          <div class="col-card-price">¥18,700（税込）</div>
+        </div>
+      </div>
+      <div class="col-card reveal d1">
+        <div class="col-card-img">
+          <img src="https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&q=85&auto=format&fit=crop" alt="Wide Pants" onerror="this.style.background='#d8d0c8'">
+          <div class="col-card-tag">POPULAR</div>
+        </div>
+        <div class="col-card-body">
+          <div class="col-card-category">BOTTOMS</div>
+          <div class="col-card-name">Wide Tuck Pants</div>
+          <div class="col-card-price">¥24,200（税込）</div>
+        </div>
+      </div>
+      <div class="col-card reveal d2">
+        <div class="col-card-img">
+          <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=600&q=85&auto=format&fit=crop" alt="Cotton Dress" onerror="this.style.background='#c8c0b8'">
+        </div>
+        <div class="col-card-body">
+          <div class="col-card-category">DRESS</div>
+          <div class="col-card-name">Organic Cotton Dress</div>
+          <div class="col-card-price">¥32,450（税込）</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="values">
+    <div class="values-left reveal">
+      <div class="sec-label">OUR VALUES</div>
+      <h2 class="sec-title">CELVAが<br>大切にする<br>3つのこと</h2>
+    </div>
+    <div class="values-right">
+      <div class="value-item reveal">
+        <div class="value-num">01</div>
+        <div class="value-title">CRAFTSMANSHIP</div>
+        <div class="value-body">日本国内の熟練職人との長期的なパートナーシップ。機械では生み出せない手仕事の温もりを、すべての製品に宿します。</div>
+      </div>
+      <div class="value-item reveal d1">
+        <div class="value-num">02</div>
+        <div class="value-title">SUSTAINABILITY</div>
+        <div class="value-body">オーガニックコットン・天然リネン・再生素材を積極的に採用。2030年までにCO₂排出量50%削減を目指しています。</div>
+      </div>
+      <div class="value-item reveal d2">
+        <div class="value-num">03</div>
+        <div class="value-title">TIMELESSNESS</div>
+        <div class="value-body">「来シーズンには捨てる服」を作りません。10年後も着られる普遍的なデザインと品質で、ファストファッションに代わる選択肢を。</div>
+      </div>
+      <div class="value-item reveal d3">
+        <div class="value-num">04</div>
+        <div class="value-title">TRANSPARENCY</div>
+        <div class="value-body">素材の産地・製造工程・環境負荷をすべてオープンにします。消費者が信頼できる情報開示が、誠実なブランドの証です。</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="banner reveal">
+    <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=1600&q=85&auto=format&fit=crop" alt="CELVA Founder" onerror="this.style.background='#4a3d35'">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+      <div class="banner-label">FOUNDER</div>
+      <h2 class="banner-title">創業者の想いが、<br><em>CELVAをつくる。</em></h2>
+      <button class="btn-outline" onclick="showPage('founder')">MEET THE FOUNDER</button>
+    </div>
+  </div>
+
+  <div class="banner reveal">
+    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1600&q=85&auto=format&fit=crop" alt="CELVA Sustainability" onerror="this.style.background='#3d4a35'">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+      <div class="banner-label">SUSTAINABILITY</div>
+      <h2 class="banner-title">服を作ることは、<br><em>未来を作ること。</em></h2>
+      <button class="btn-outline" onclick="showPage('sustainability')">LEARN MORE</button>
+    </div>
+  </div>
+
+  <section class="news-sec reveal">
+    <div class="sec-header">
+      <div>
+        <div class="sec-label">NEWS</div>
+        <h2 class="sec-title">最新情報</h2>
+      </div>
+      <button class="sec-link" onclick="showPage('news')">ALL NEWS</button>
+    </div>
+    <div class="news-grid">
+      <div class="news-card reveal">
+        <div class="news-card-img"><img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=500&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#e8e0d8'"></div>
+        <div class="news-date">2026.05.01</div>
+        <div class="news-cat">COLLECTION</div>
+        <div class="news-title">SS2026コレクション「ORIGIN」発売開始</div>
+      </div>
+      <div class="news-card reveal d1">
+        <div class="news-card-img"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=500&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#d8d0c8'"></div>
+        <div class="news-date">2026.04.15</div>
+        <div class="news-cat">STORE</div>
+        <div class="news-title">代々木上原フラッグシップストアリニューアルオープン</div>
+      </div>
+      <div class="news-card reveal d2">
+        <div class="news-card-img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#c8c0b8'"></div>
+        <div class="news-date">2026.03.20</div>
+        <div class="news-cat">SUSTAINABILITY</div>
+        <div class="news-title">2025年度サステナビリティレポートを公開しました</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ========== ABOUT PAGE ========== -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=85&auto=format&fit=crop" alt="About CELVA" onerror="this.style.background='#4a3d35'">
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-content">
+      <div class="page-hero-label">ABOUT CELVA</div>
+      <h1 class="page-hero-title">服を通じて、<br><em>誠実であること。</em></h1>
+    </div>
+  </div>
+
+  <section class="about-message">
+    <div class="about-msg-text reveal">
+      <div class="sec-label" style="font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;color:var(--terra);margin-bottom:24px;">MESSAGE FROM FOUNDER</div>
+      <blockquote class="quote">「良い服とは、着る人の人生に<br>静かに寄り添うものだと思っています。」</blockquote>
+      <p>CELVAを立ち上げたのは2018年、私が30歳のときでした。長年ファッション業界に身を置いてきた中で、ずっと感じていた違和感がありました。シーズンごとに大量生産され、翌年には廃棄される服。それに加担していることへの後ろめたさでした。</p>
+      <p>だから原点に立ち返ることにしました。素材は何か、誰が作っているのか、どこで作られているのか。その問いを一つひとつ丁寧に解きほぐし、誠実に答えられるブランドを作ること。それがCELVAの出発点です。</p>
+      <p>まだ道半ばですが、一着一着に込めた想いは本物です。お客様がCELVAの服を手に取るとき、その背景にある人や物語まで感じていただけたら、これ以上の喜びはありません。</p>
+      <div class="sign">— 田中 凛, Founder & Creative Director</div>
+    </div>
+    <div class="about-msg-img reveal d1">
+      <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=800&q=85&auto=format&fit=crop" alt="Founder" onerror="this.style.background:'#c8b8a8'">
+    </div>
+  </section>
+
+  <section class="about-philosophy reveal">
+    <div class="sec-label" style="font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;color:var(--terra-light);margin-bottom:12px;">PHILOSOPHY</div>
+    <h2 class="sec-title" style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;line-height:1.3;color:var(--white);">企業理念</h2>
+    <div class="phil-grid">
+      <div class="phil-item reveal">
+        <div class="phil-num">01</div>
+        <div class="phil-title">MISSION</div>
+        <div class="phil-body">服を通じて、人と地球と未来に誠実であり続ける。素材・製造・販売のすべてにおいて透明性を持ち、消費者が胸を張って選べるアパレルブランドであること。</div>
+      </div>
+      <div class="phil-item reveal d1">
+        <div class="phil-num">02</div>
+        <div class="phil-title">VISION</div>
+        <div class="phil-body">2030年までに、国内アパレル業界においてサステナビリティのスタンダードを塗り替える。「良い服を、長く、愛着を持って」という文化を根付かせる。</div>
+      </div>
+      <div class="phil-item reveal d2">
+        <div class="phil-num">03</div>
+        <div class="phil-title">VALUES</div>
+        <div class="phil-body">誠実・継続・革新。この3つの価値観を軸に、職人・素材・環境・顧客すべてに対して責任ある判断を行い、長期的な信頼関係を築き続けます。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-history reveal">
+    <div>
+      <div class="sec-label" style="font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;color:var(--terra);margin-bottom:12px;">HISTORY</div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;">ブランドの歩み</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">2018</div>
+        <div class="tl-dot"></div>
+        <div class="tl-title">FOUNDING</div>
+        <div class="tl-body">東京・代々木上原にてCELVA設立。初年度よりオーガニックコットン100%のベーシックラインを展開。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2019</div>
+        <div class="tl-dot"></div>
+        <div class="tl-title">ARTISAN PARTNERSHIP</div>
+        <div class="tl-body">岡山・広島の縫製工場5社と長期パートナーシップを締結。国内生産比率80%を達成。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2021</div>
+        <div class="tl-dot"></div>
+        <div class="tl-title">SUSTAINABILITY REPORT</div>
+        <div class="tl-body">日本のアパレルブランドとして初めて、全商品の製造工程・CO₂排出量を開示するサステナビリティレポートを発行。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2023</div>
+        <div class="tl-dot"></div>
+        <div class="tl-title">GLOBAL AWARD</div>
+        <div class="tl-body">Good Design Award受賞。ミラノ・パリのプレスリリースにも取り上げられ、海外メディアからも注目を集める。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2026</div>
+        <div class="tl-dot"></div>
+        <div class="tl-title">TODAY</div>
+        <div class="tl-body">直営店3店舗・EC・セレクトショップを通じて全国展開。年間取扱点数200SKU、サポーター数15,000名を超える。</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== COLLECTION PAGE ========== -->
+<div class="page" id="page-collection">
+  <div class="col-page-hero">
+    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&q=85&auto=format&fit=crop" alt="Collection" onerror="this.style.background:'#4a3d35'">
+    <div class="col-page-hero-overlay"></div>
+    <div class="col-page-hero-content">
+      <div class="page-hero-label">SS 2026</div>
+      <h1 class="page-hero-title" style="color:var(--white);">Collection<br><em>"ORIGIN"</em></h1>
+    </div>
+  </div>
+
+  <div class="collection-filters">
+    <button class="filter-btn active" onclick="setFilter(this,'all')">ALL</button>
+    <button class="filter-btn" onclick="setFilter(this,'tops')">TOPS</button>
+    <button class="filter-btn" onclick="setFilter(this,'bottoms')">BOTTOMS</button>
+    <button class="filter-btn" onclick="setFilter(this,'outer')">OUTER</button>
+    <button class="filter-btn" onclick="setFilter(this,'dress')">DRESS</button>
+    <button class="filter-btn" onclick="setFilter(this,'goods')">GOODS</button>
+  </div>
+
+  <div class="col-full-grid">
+    <div class="col-full-card" data-cat="tops">
+      <div class="col-full-card-img"><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=500&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#e8e0d8'"></div>
+      <div class="col-full-cat">TOPS</div>
+      <div class="col-full-name">Natural Linen Shirt</div>
+      <div class="col-full-price">¥18,700</div>
+    </div>
+    <div class="col-full-card" data-cat="bottoms">
+      <div class="col-full-card-img"><img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#d8d0c8'"></div>
+      <div class="col-full-cat">BOTTOMS</div>
+      <div class="col-full-name">Wide Tuck Pants</div>
+      <div class="col-full-price">¥24,200</div>
+    </div>
+    <div class="col-full-card" data-cat="dress">
+      <div class="col-full-card-img"><img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#c8c0b8'"></div>
+      <div class="col-full-cat">DRESS</div>
+      <div class="col-full-name">Organic Cotton Dress</div>
+      <div class="col-full-price">¥32,450</div>
+    </div>
+    <div class="col-full-card" data-cat="outer">
+      <div class="col-full-card-img"><img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=500&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#b8b0a8'"></div>
+      <div class="col-full-cat">OUTER</div>
+      <div class="col-full-name">Recycled Wool Coat</div>
+      <div class="col-full-price">¥68,200</div>
+    </div>
+    <div class="col-full-card" data-cat="tops">
+      <div class="col-full-card-img"><img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#e8e0d8'"></div>
+      <div class="col-full-cat">TOPS</div>
+      <div class="col-full-name">Hemp Cotton Tee</div>
+      <div class="col-full-price">¥9,900</div>
+    </div>
+    <div class="col-full-card" data-cat="goods">
+      <div class="col-full-card-img"><img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#d8d0c8'"></div>
+      <div class="col-full-cat">GOODS</div>
+      <div class="col-full-name">Leather Tote Bag</div>
+      <div class="col-full-price">¥44,000</div>
+    </div>
+    <div class="col-full-card" data-cat="bottoms">
+      <div class="col-full-card-img"><img src="https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?w=500&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#c8c0b8'"></div>
+      <div class="col-full-cat">BOTTOMS</div>
+      <div class="col-full-name">Linen Drawstring Shorts</div>
+      <div class="col-full-price">¥16,500</div>
+    </div>
+    <div class="col-full-card" data-cat="outer">
+      <div class="col-full-card-img"><img src="https://images.unsplash.com/photo-1539533018447-63fcce2678e4?w=500&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#b8b0a8'"></div>
+      <div class="col-full-cat">OUTER</div>
+      <div class="col-full-name">Cotton Blouson</div>
+      <div class="col-full-price">¥38,500</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SUSTAINABILITY PAGE ========== -->
+<div class="page" id="page-sustainability">
+  <div class="sustain-hero">
+    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1400&q=85&auto=format&fit=crop" alt="Sustainability" onerror="this.style.background:'#2c4a35'">
+    <div class="sustain-hero-overlay"></div>
+    <div class="sustain-hero-content">
+      <div class="page-hero-label">SUSTAINABILITY</div>
+      <h1 class="page-hero-title" style="color:var(--white);">服を作ることは、<br><em>未来を作ること。</em></h1>
+    </div>
+  </div>
+
+  <section class="sustain-intro reveal">
+    <div class="big-quote">"ファッションは、地球環境に対してもっと責任を持てる。私たちはその証明をし続ける。"</div>
+    <p>CELVAは創業当初から、サステナビリティを「後付けの取り組み」ではなく「事業の核」として位置づけてきました。素材の調達から製品の廃棄まで、すべてのプロセスで環境・社会・経済への影響を考慮した意思決定を行っています。</p>
+  </section>
+
+  <div class="sustain-pillars">
+    <div class="pillar reveal">
+      <div class="pillar-img">
+        <img src="https://images.unsplash.com/photo-1595665593673-bf1ad72905c0?w=700&q=85&auto=format&fit=crop" alt="縫製工場" onerror="this.style.background='#c8b8a8'">
+      </div>
+      <div class="pillar-body-wrap">
+        <div class="pillar-title">MATERIAL</div>
+        <div class="pillar-body">オーガニックコットン・天然リネン・再生ポリエステルなど、環境負荷の低い素材を優先的に使用。2026年現在、全商品の87%がサステナブル素材で構成されています。</div>
+        <div class="pillar-num">87<span style="font-size:20px">%</span></div>
+        <div class="pillar-num-label">サステナブル素材比率</div>
+      </div>
+    </div>
+    <div class="pillar reveal d1">
+      <div class="pillar-img">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=85&auto=format&fit=crop" alt="国内縫製工場" onerror="this.style.background='#b8a898'">
+      </div>
+      <div class="pillar-body-wrap">
+        <div class="pillar-title">PRODUCTION</div>
+        <div class="pillar-body">国内縫製工場との直接契約により、適正な賃金と労働環境を保証。輸送距離の短縮によりCO₂排出量も従来比42%削減を達成しています。</div>
+        <div class="pillar-num">42<span style="font-size:20px">%</span></div>
+        <div class="pillar-num-label">CO₂排出量削減（従来比）</div>
+      </div>
+    </div>
+    <div class="pillar reveal d2">
+      <div class="pillar-img">
+        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=700&q=85&auto=format&fit=crop" alt="サーキュラーエコノミー" onerror="this.style.background='#a89888'">
+      </div>
+      <div class="pillar-body-wrap">
+        <div class="pillar-title">CIRCULAR</div>
+        <div class="pillar-body">CELVAの服を着終えたら、回収プログラムへ。リペア・リユース・リサイクルの3段階で廃棄ゼロを目指す「CELVA CIRCLE」を2024年より開始。</div>
+        <div class="pillar-num">0</div>
+        <div class="pillar-num-label">廃棄ゼロへの挑戦（目標2030）</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== FOUNDER PAGE ========== -->
+<div class="page" id="page-founder">
+  <div class="founder-hero">
+    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1400&q=85&auto=format&fit=crop" alt="CELVA Atelier" onerror="this.style.background='#4a3d35'">
+    <div class="founder-hero-overlay"></div>
+    <div class="founder-hero-content">
+      <div class="page-hero-label">FOUNDER & CREATIVE DIRECTOR</div>
+      <h1 class="page-hero-title" style="color:var(--white);">服と向き合い、<br><em>人と向き合う。</em></h1>
+    </div>
+  </div>
+
+  <section class="founder-main">
+    <div class="founder-photo-wrap reveal">
+      <img class="founder-photo"
+        src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&q=85&auto=format&fit=crop"
+        alt="田中 凛 - CELVA Founder"
+        onerror="this.src='https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=600&q=85&auto=format&fit=crop'">
+      <div class="founder-photo-caption">
+        <div class="founder-caption-name">田中 凛</div>
+        <div class="founder-caption-title">FOUNDER & CREATIVE DIRECTOR</div>
+      </div>
+    </div>
+    <div class="founder-info reveal d1">
+      <div class="founder-tag">PROFILE</div>
+      <h2 class="founder-name-big">田中 凛</h2>
+      <div class="founder-name-en">RIN TANAKA</div>
+      <p class="founder-bio">1990年、東京都生まれ。文化服装学院でファッションデザインを学んだ後、パリ・ミラノで複数のラグジュアリーブランドのデザイン業務に携わる。帰国後、大手アパレル企業でMD職を経験する中で、「大量生産・大量廃棄」という業界の構造的問題に強い違和感を覚える。</p>
+      <p class="founder-bio">2018年、「誠実なものづくりで、長く愛される服を作る」という理念のもとCELVAを設立。国内の熟練職人との協業と、オーガニック素材へのこだわりを軸に、サステナブルアパレルの新しいスタンダードを追求し続けている。</p>
+      <p class="founder-bio">現在は、創業者兼クリエイティブディレクターとしてブランドの世界観全体を統括。「服は着る人の物語を纏うもの」という信念のもと、シーズンを超えて愛される普遍的なデザインを発信している。</p>
+      <blockquote class="founder-quote">
+        "良い服には、時間が経つほど味わいが増す。<br>それはつくり手の誠実さが宿るから。"
+      </blockquote>
+      <div class="founder-data">
+        <div class="fd-item">
+          <div class="fd-label">BIRTHPLACE</div>
+          <div class="fd-val">東京都渋谷区</div>
+        </div>
+        <div class="fd-item">
+          <div class="fd-label">EDUCATION</div>
+          <div class="fd-val">文化服装学院<br>ファッションデザイン科</div>
+        </div>
+        <div class="fd-item">
+          <div class="fd-label">SPECIALTY</div>
+          <div class="fd-val">サステナブルデザイン<br>テキスタイル・MD</div>
+        </div>
+        <div class="fd-item">
+          <div class="fd-label">AWARDS</div>
+          <div class="fd-val">Good Design Award 2023<br>Forbes JAPAN 注目の起業家30選</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="founder-career reveal">
+    <h2 class="career-title">Career</h2>
+    <div class="career-grid">
+      <div class="career-item">
+        <div class="career-year">2012</div>
+        <div class="career-event">文化服装学院 卒業</div>
+        <div class="career-detail">ファッションデザイン科を首席で卒業。在学中から自身のミニコレクションを制作・発表し、業界内で注目を集める。</div>
+      </div>
+      <div class="career-item">
+        <div class="career-year">2013</div>
+        <div class="career-event">パリ・ミラノでの修行</div>
+        <div class="career-detail">フランス・イタリアの計3ブランドでアシスタントデザイナーとして勤務。素材・縫製・デザインの本質を学ぶ。</div>
+      </div>
+      <div class="career-item">
+        <div class="career-year">2016</div>
+        <div class="career-event">大手アパレルMD職</div>
+        <div class="career-detail">帰国後、国内大手アパレル企業のマーチャンダイザーに。ビジネスとクリエイティブの両立を学びながら、業界の課題と向き合う。</div>
+      </div>
+      <div class="career-item">
+        <div class="career-year">2018</div>
+        <div class="career-event">CELVA 設立</div>
+        <div class="career-detail">東京・代々木上原にてCELVA Inc.を設立。創業と同時に岡山・広島の縫製工場とパートナーシップを締結。</div>
+      </div>
+      <div class="career-item">
+        <div class="career-year">2023</div>
+        <div class="career-event">Good Design Award 受賞</div>
+        <div class="career-detail">サステナブルなものづくりへの取り組みとブランドとしての一貫したデザイン哲学が評価され、グッドデザイン賞を受賞。</div>
+      </div>
+      <div class="career-item">
+        <div class="career-year">2026</div>
+        <div class="career-event">現在</div>
+        <div class="career-detail">直営3店舗・EC・セレクトショップを通じ全国展開。「誠実なものづくり」を軸に、日本から世界へサステナブルファッションの新基準を発信中。</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== NEWS PAGE ========== -->
+<div class="page" id="page-news">
+  <div class="news-page">
+    <div>
+      <div class="sec-label" style="font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;color:var(--terra);margin-bottom:12px;">NEWS & TOPICS</div>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;">最新情報</h1>
+    </div>
+    <div class="news-full-grid">
+      <div class="news-full-card reveal">
+        <div class="news-full-card-img"><img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#e8e0d8'"></div>
+        <div class="news-full-body">
+          <div class="news-full-meta"><span class="news-full-date">2026.05.01</span><span class="news-full-cat">COLLECTION</span></div>
+          <div class="news-full-title">SS2026コレクション「ORIGIN」全アイテム発売開始</div>
+          <div class="news-full-excerpt">自然素材の原点に立ち返った今季コレクション。リネン・オーガニックコットン・再生ウールを中心に、全32アイテムをラインナップ。</div>
+        </div>
+      </div>
+      <div class="news-full-card reveal d1">
+        <div class="news-full-card-img"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#d8d0c8'"></div>
+        <div class="news-full-body">
+          <div class="news-full-meta"><span class="news-full-date">2026.04.15</span><span class="news-full-cat">STORE</span></div>
+          <div class="news-full-title">代々木上原フラッグシップストアリニューアルオープン</div>
+          <div class="news-full-excerpt">内装デザインをアップデート。サステナブル素材のみで設計した店舗空間で、新コレクションをお楽しみください。</div>
+        </div>
+      </div>
+      <div class="news-full-card reveal">
+        <div class="news-full-card-img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#c8c0b8'"></div>
+        <div class="news-full-body">
+          <div class="news-full-meta"><span class="news-full-date">2026.03.20</span><span class="news-full-cat">SUSTAINABILITY</span></div>
+          <div class="news-full-title">2025年度サステナビリティレポートを公開</div>
+          <div class="news-full-excerpt">CO₂排出量・素材調達先・労働環境など、すべての数値を開示。今年度は製造過程の廃棄物を前年比38%削減しました。</div>
+        </div>
+      </div>
+      <div class="news-full-card reveal d1">
+        <div class="news-full-card-img"><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400&q=80&auto=format&fit=crop" alt="" onerror="this.style.background='#e8e0d8'"></div>
+        <div class="news-full-body">
+          <div class="news-full-meta"><span class="news-full-date">2026.02.28</span><span class="news-full-cat">EVENT</span></div>
+          <div class="news-full-title">表参道ポップアップストア開催決定（3/15〜3/30）</div>
+          <div class="news-full-excerpt">期間限定のポップアップを表参道ヒルズにて開催。限定アイテムの先行販売・ワークショップも実施します。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CONTACT PAGE ========== -->
+<div class="page" id="page-contact">
+  <div class="contact-page">
+    <div style="text-align:center;margin-bottom:72px;">
+      <div class="sec-label" style="font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;color:var(--terra);margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:12px;"><span style="width:32px;height:1px;background:var(--terra);display:inline-block;"></span>CONTACT<span style="width:32px;height:1px;background:var(--terra);display:inline-block;"></span></div>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;">お問い合わせ</h1>
+    </div>
+    <div class="contact-wrap">
+      <div class="contact-info reveal">
+        <h2 class="info-title">お気軽に<br>ご連絡ください。</h2>
+        <p>商品に関するご質問、法人・メディア向けのご相談、採用に関するお問い合わせなど、下記フォームよりお送りください。3営業日以内にご返信いたします。</p>
+        <div class="contact-detail">
+          <div class="cd-item"><div class="cd-label">STORE</div><div class="cd-val">東京都渋谷区西原3-1-5 CELVAビル1F<br>営業時間 11:00〜20:00（水曜定休）</div></div>
+          <div class="cd-item"><div class="cd-label">EMAIL</div><div class="cd-val">info@celva-official.jp</div></div>
+          <div class="cd-item"><div class="cd-label">TEL</div><div class="cd-val">03-0000-0000（平日 10:00〜18:00）</div></div>
+        </div>
+      </div>
+      <form class="cf reveal d1" id="contactForm" action="https://formspree.io/f/xeenzveo" method="POST" onsubmit="return sendMsg(event)">
+        <div class="cf-row">
+          <div class="cfg"><label class="cfl">お名前<em> *</em></label><input type="text" name="name" class="cfi" placeholder="田中 花子" required></div>
+          <div class="cfg"><label class="cfl">会社名</label><input type="text" name="company" class="cfi" placeholder="株式会社〇〇"></div>
+        </div>
+        <div class="cfg"><label class="cfl">メールアドレス<em> *</em></label><input type="email" name="email" class="cfi" placeholder="example@email.com" required></div>
+        <div class="cfg"><label class="cfl">お問い合わせ種別</label>
+          <select name="type" class="cfs">
+            <option>商品について</option>
+            <option>ご注文・配送について</option>
+            <option>法人・メディアのご相談</option>
+            <option>採用について</option>
+            <option>その他</option>
+          </select>
+        </div>
+        <div class="cfg"><label class="cfl">メッセージ<em> *</em></label><textarea name="message" class="cft" placeholder="お問い合わせ内容をご記入ください" required></textarea></div>
+        <input type="hidden" name="_subject" value="【CELVAサイト】お問い合わせ">
+        <button type="submit" class="cfsub">SEND MESSAGE</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">CELVA</div>
+      <div class="footer-tagline">Wear your story.</div>
+      <div class="footer-desc">素材と誠実に向き合い、着る人の物語を纏う。CELVAは日本の職人技とサステナブルな未来をつなぐアパレルブランドです。</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">BRAND</div>
+      <ul>
+        <li onclick="showPage('about')">About</li>
+        <li onclick="showPage('sustainability')">Sustainability</li>
+        <li onclick="showPage('news')">News</li>
+        <li onclick="showPage('contact')">Contact</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">COLLECTION</div>
+      <ul>
+        <li onclick="showPage('collection')">SS 2026</li>
+        <li onclick="showPage('collection')">Tops</li>
+        <li onclick="showPage('collection')">Bottoms</li>
+        <li onclick="showPage('collection')">Outer</li>
+        <li onclick="showPage('collection')">Goods</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">STORE</div>
+      <div class="store-list">
+        <div class="store-item">
+          <div class="store-item-left">
+            <div class="store-name">代々木上原（旗艦店）</div>
+            <div class="store-addr">渋谷区西原3丁目付近</div>
+          </div>
+          <a class="store-map-btn" href="https://maps.google.com/?q=代々木上原駅,渋谷区" target="_blank" rel="noopener">MAP →</a>
+        </div>
+        <div class="store-item">
+          <div class="store-item-left">
+            <div class="store-name">表参道</div>
+            <div class="store-addr">港区南青山付近</div>
+          </div>
+          <a class="store-map-btn" href="https://maps.google.com/?q=表参道駅,港区南青山" target="_blank" rel="noopener">MAP →</a>
+        </div>
+        <div class="store-item">
+          <div class="store-item-left">
+            <div class="store-name">大阪・南堀江</div>
+            <div class="store-addr">大阪市西区南堀江付近</div>
+          </div>
+          <a class="store-map-btn" href="https://maps.google.com/?q=南堀江,大阪市西区" target="_blank" rel="noopener">MAP →</a>
+        </div>
+        <div class="store-item">
+          <div class="store-item-left">
+            <div class="store-name">オンラインストア</div>
+            <div class="store-addr">全国配送対応</div>
+          </div>
+          <a class="store-map-btn" href="#" onclick="showPage('collection');return false;">SHOP →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bot">
+    <div class="footer-copy">© 2026 CELVA Inc. All Rights Reserved.</div>
+    <div class="footer-sns">
+      <a href="#">INSTAGRAM</a>
+      <a href="#">X</a>
+      <a href="#">FACEBOOK</a>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">お問い合わせを送信しました。3営業日以内にご返信いたします。</div>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  const nl=document.getElementById('nav-'+id);
+  if(nl)nl.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>{
+    document.querySelectorAll('.reveal').forEach(el=>{
+      const rect=el.getBoundingClientRect();
+      if(rect.top<window.innerHeight*1.1)el.classList.add('visible');
+    });
+  },100);
+}
+function setFilter(btn,cat){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.col-full-card').forEach(c=>{
+    c.style.display=(cat==='all'||c.dataset.cat===cat)?'block':'none';
+  });
+}
+async function sendMsg(e){
+  e.preventDefault();
+  const form=document.getElementById('contactForm');
+  const btn=form.querySelector('.cfsub');
+  btn.textContent='SENDING...';btn.disabled=true;
+  try{
+    const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}});
+    if(res.ok){
+      const t=document.getElementById('toast');
+      t.classList.add('show');setTimeout(()=>t.classList.remove('show'),5000);
+      form.reset();
+    }else{alert('送信に失敗しました。直接メールにてご連絡ください。');}
+  }catch{alert('通信エラーが発生しました。');}
+  btn.textContent='SEND MESSAGE';btn.disabled=false;
+  return false;
+}
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>40);
+  document.querySelectorAll('#page-home.active .reveal,#page-about.active .reveal,#page-collection.active .reveal,#page-sustainability.active .reveal,#page-news.active .reveal,#page-contact.active .reveal').forEach(el=>{
+    if(el.getBoundingClientRect().top<window.innerHeight*.9)el.classList.add('visible');
+  });
+});
+setTimeout(()=>{
+  document.querySelectorAll('#page-home .reveal').forEach((el,i)=>{
+    setTimeout(()=>el.classList.add('visible'),i*80);
+  });
+},200);
+</script>
+</body>
+</html>
