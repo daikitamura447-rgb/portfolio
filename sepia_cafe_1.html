@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEPIA CAFE | 町田駅徒歩4分のおしゃれカフェ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #FAF8F3;
+    --warm-white: #FFFDF9;
+    --brown-dark: #3A2E24;
+    --brown-mid: #6B5040;
+    --brown-light: #A07858;
+    --brown-pale: #D4B896;
+    --accent: #C8956A;
+    --text-main: #2E2419;
+    --text-sub: #7A6355;
+    --text-light: #B09A88;
+    --border: #E8DDD0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--cream);
+    color: var(--text-main);
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(250, 248, 243, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    height: 64px;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--brown-dark);
+    text-decoration: none;
+  }
+
+  .nav-logo span {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--text-sub);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 400;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-reserve {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 9px 22px;
+    background: var(--brown-dark);
+    color: var(--cream);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .nav-reserve:hover { background: var(--accent); }
+
+  /* ===== HERO ===== */
+  #hero {
+    height: 100vh;
+    min-height: 600px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 64px;
+  }
+
+  .hero-left {
+    background: var(--warm-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 8% 0 9%;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--brown-dark);
+    margin-bottom: 12px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-subtitle {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px;
+    color: var(--text-sub);
+    margin-bottom: 40px;
+    font-weight: 300;
+    line-height: 2;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .btn-primary {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    padding: 14px 32px;
+    background: var(--brown-dark);
+    color: var(--cream);
+    text-decoration: none;
+    transition: background 0.2s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--accent); }
+
+  .btn-secondary {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--text-sub);
+    text-decoration: none;
+    border-bottom: 1px solid var(--text-sub);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-secondary:hover { color: var(--accent); border-color: var(--accent); }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--brown-pale);
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.92;
+    display: block;
+  }
+
+  .hero-badge {
+    position: absolute;
+    bottom: 40px;
+    left: -16px;
+    background: var(--warm-white);
+    padding: 20px 28px;
+    border-left: 3px solid var(--accent);
+    box-shadow: 0 8px 32px rgba(58, 46, 36, 0.12);
+  }
+
+  .hero-badge p {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-sub);
+    margin-bottom: 4px;
+  }
+
+  .hero-badge strong {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--brown-dark);
+  }
+
+  /* ===== STRENGTHS ===== */
+  #strengths {
+    background: var(--brown-dark);
+    padding: 80px 5%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background-color: var(--brown-mid);
+  }
+
+  .strength-item {
+    background: var(--brown-dark);
+    padding: 48px 40px;
+    text-align: center;
+  }
+
+  .strength-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .strength-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--brown-pale);
+    margin-bottom: 12px;
+  }
+
+  .strength-desc {
+    font-size: 13px;
+    color: rgba(212, 184, 150, 0.6);
+    line-height: 1.8;
+  }
+
+  /* ===== SECTION HEADER ===== */
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 300;
+    color: var(--brown-dark);
+    line-height: 1.3;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .section-sub {
+    font-size: 14px;
+    color: var(--text-sub);
+    margin-top: 16px;
+    font-weight: 300;
+  }
+
+  /* ===== MENU ===== */
+  #menu {
+    padding: 120px 5%;
+    background: var(--warm-white);
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .menu-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
+    cursor: pointer;
+  }
+
+  .menu-card:hover .menu-img { transform: scale(1.04); }
+  .menu-card:hover .menu-overlay { opacity: 1; }
+
+  .menu-img-wrap {
+    aspect-ratio: 4/5;
+    overflow: hidden;
+  }
+
+  .menu-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .menu-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(58, 46, 36, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .menu-overlay-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: #fff;
+    letter-spacing: 0.1em;
+  }
+
+  .menu-info {
+    padding: 24px;
+    background: var(--warm-white);
+  }
+
+  .menu-category {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+
+  .menu-name {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--brown-dark);
+    margin-bottom: 8px;
+  }
+
+  .menu-desc {
+    font-size: 12px;
+    color: var(--text-sub);
+    line-height: 1.9;
+  }
+
+  .menu-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--accent);
+    margin-top: 12px;
+  }
+
+  /* ===== CONCEPT ===== */
+  #concept {
+    padding: 120px 5%;
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .concept-img-wrap {
+    position: relative;
+  }
+
+  .concept-main-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+  }
+
+  .concept-accent-img {
+    position: absolute;
+    width: 55%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    bottom: -40px;
+    right: -40px;
+    border: 8px solid var(--cream);
+  }
+
+  .concept-text {
+    padding: 20px 0;
+  }
+
+  .concept-body {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px;
+    color: var(--text-sub);
+    line-height: 2.2;
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+
+  .concept-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .concept-tag {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    color: var(--text-sub);
+  }
+
+  /* ===== VOICE (口コミ) ===== */
+  #voice {
+    padding: 120px 5%;
+    background: var(--warm-white);
+  }
+
+  .voice-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .voice-card {
+    background: var(--cream);
+    padding: 40px 36px;
+    border-top: 2px solid var(--accent);
+    position: relative;
+  }
+
+  .voice-quote {
+    font-size: 60px;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--border);
+    position: absolute;
+    top: 20px;
+    left: 28px;
+    line-height: 1;
+  }
+
+  .voice-text {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px;
+    color: var(--text-sub);
+    line-height: 2;
+    margin-bottom: 24px;
+    padding-top: 20px;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+  }
+
+  .voice-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .voice-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--brown-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--brown-dark);
+    font-weight: 500;
+  }
+
+  .voice-name {
+    font-size: 12px;
+    color: var(--text-main);
+    font-weight: 500;
+  }
+
+  .voice-stars {
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  /* ===== SCENE ===== */
+  #scene {
+    padding: 120px 5%;
+    background: var(--cream);
+  }
+
+  .scene-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+    height: 600px;
+  }
+
+  .scene-item {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .scene-item.main { grid-row: 1 / 3; }
+
+  .scene-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .scene-item:hover .scene-img { transform: scale(1.03); }
+
+  .scene-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(transparent, rgba(58, 46, 36, 0.7));
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+  }
+
+  /* ===== ACCESS ===== */
+  #access {
+    padding: 120px 5%;
+    background: var(--brown-dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .access-info h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .access-info h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .access-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .access-table {
+    width: 100%;
+    margin-top: 40px;
+    border-collapse: collapse;
+  }
+
+  .access-table tr {
+    border-bottom: 1px solid rgba(212, 184, 150, 0.15);
+  }
+
+  .access-table td {
+    padding: 16px 0;
+    font-size: 13px;
+  }
+
+  .access-table td:first-child {
+    color: var(--accent);
+    width: 90px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+  }
+
+  .access-table td:last-child {
+    color: var(--brown-pale);
+    line-height: 1.8;
+  }
+
+  .access-note {
+    margin-top: 24px;
+    padding: 20px 24px;
+    background: rgba(200, 149, 106, 0.1);
+    border-left: 2px solid var(--accent);
+  }
+
+  .access-note p {
+    font-size: 12px;
+    color: var(--brown-pale);
+    line-height: 1.9;
+  }
+
+  .map-wrap {
+    border-radius: 0;
+    overflow: hidden;
+    height: 400px;
+    border: 1px solid rgba(212, 184, 150, 0.2);
+  }
+
+  .map-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  .map-btn {
+    display: block;
+    margin-top: 16px;
+    text-align: center;
+    padding: 14px;
+    background: var(--accent);
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    transition: background 0.2s;
+  }
+
+  .map-btn:hover { background: var(--brown-light); }
+
+  /* ===== RESERVE ===== */
+  #reserve {
+    padding: 120px 5%;
+    background: var(--cream);
+    text-align: center;
+  }
+
+  .reserve-body {
+    font-size: 14px;
+    color: var(--text-sub);
+    margin: 24px 0 48px;
+    line-height: 2;
+  }
+
+  .reserve-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-big {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    padding: 18px 48px;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+
+  .btn-big-fill {
+    background: var(--brown-dark);
+    color: var(--cream);
+  }
+
+  .btn-big-fill:hover { background: var(--accent); }
+
+  .btn-big-outline {
+    border: 1px solid var(--brown-dark);
+    color: var(--brown-dark);
+  }
+
+  .btn-big-outline:hover {
+    background: var(--brown-dark);
+    color: var(--cream);
+  }
+
+  /* ===== RESERVE FORM ===== */
+  #reserve {
+    padding: 120px 5%;
+    background: var(--cream);
+  }
+
+  #reserve .section-header {
+    margin-bottom: 56px;
+  }
+
+  .form-wrap {
+    max-width: 720px;
+    margin: 0 auto 56px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--text-sub);
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .form-required {
+    font-size: 10px;
+    color: var(--warm-white);
+    background: var(--accent);
+    padding: 2px 8px;
+    letter-spacing: 0.05em;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-main);
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+
+  .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A6355' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--text-light);
+    font-size: 13px;
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.8;
+  }
+
+  .form-submit {
+    width: 100%;
+    padding: 18px;
+    background: var(--brown-dark);
+    color: var(--cream);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
+  }
+
+  .form-submit:hover { background: var(--accent); }
+
+  .form-submit:disabled {
+    background: var(--text-light);
+    cursor: not-allowed;
+  }
+
+  .form-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 16px;
+    letter-spacing: 0.05em;
+  }
+
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 60px 40px;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+  }
+
+  .form-success-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--cream);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+  }
+
+  .form-success h3 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--brown-dark);
+    margin-bottom: 12px;
+  }
+
+  .form-success p {
+    font-size: 14px;
+    color: var(--text-sub);
+    line-height: 2;
+  }
+
+  .reserve-tel {
+    text-align: center;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .reserve-tel p {
+    font-size: 12px;
+    color: var(--text-light);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .reserve-tel a {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--brown-dark);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .reserve-tel a:hover { color: var(--accent); }
+
+  .reserve-tel span {
+    font-size: 12px;
+    color: var(--text-light);
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--brown-dark);
+    padding: 60px 5% 40px;
+    border-top: 1px solid rgba(212, 184, 150, 0.15);
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(212, 184, 150, 0.1);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+  }
+
+  .footer-logo em { font-style: italic; color: var(--accent); }
+
+  .footer-tagline {
+    font-size: 12px;
+    color: rgba(212, 184, 150, 0.5);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 60px;
+  }
+
+  .footer-nav-col h4 {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+
+  .footer-nav-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-nav-col a {
+    font-size: 13px;
+    color: rgba(212, 184, 150, 0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-nav-col a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(212, 184, 150, 0.35);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-sns {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-sns a {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(212, 184, 150, 0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-sns a:hover { color: var(--accent); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    #hero { grid-template-columns: 1fr; height: auto; }
+    .hero-right { height: 50vw; min-height: 280px; }
+    .hero-left { padding: 60px 6%; }
+    #strengths { grid-template-columns: 1fr 1fr; }
+    .menu-grid { grid-template-columns: 1fr 1fr; }
+    .menu-card:last-child { display: none; }
+    #concept { grid-template-columns: 1fr; }
+    .concept-accent-img { display: none; }
+    .voice-grid { grid-template-columns: 1fr; }
+    .scene-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; height: auto; }
+    .scene-item.main { grid-row: auto; aspect-ratio: 16/9; }
+    .scene-item { aspect-ratio: 1; }
+    #access { grid-template-columns: 1fr; }
+    .footer-top { flex-direction: column; gap: 40px; }
+    .footer-nav { gap: 32px; }
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    #strengths { grid-template-columns: 1fr 1fr; gap: 1px; }
+    .strength-item { padding: 32px 20px; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .menu-card:last-child { display: block; }
+    .reserve-actions { flex-direction: column; align-items: center; }
+    .footer-nav { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">SEPIA <em>Cafe</em></a>
+  <ul class="nav-links">
+    <li><a href="#menu">MENU</a></li>
+    <li><a href="#concept">CONCEPT</a></li>
+    <li><a href="#scene">SCENE</a></li>
+    <li><a href="#access">ACCESS</a></li>
+  </ul>
+  <a href="https://www.hotpepper.jp/strJ000025454/" class="nav-reserve" target="_blank">予約する</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">MACHIDA · CAFE · SINCE 2005</p>
+    <h1 class="hero-title">
+      日常に、<br><em>特別な</em><br>ひとときを。
+    </h1>
+    <p class="hero-subtitle">
+      こだわりのもちもち生パスタと<br>
+      季節のパフェ。女子会・デートに。<br>
+      町田駅から徒歩わずか4分。
+    </p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">メニューを見る</a>
+      <a href="#access" class="btn-secondary">アクセス</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img
+      src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=900&auto=format&fit=crop&q=80"
+      alt="セピアカフェの雰囲気"
+      class="hero-img"
+    >
+    <div class="hero-badge">
+      <p>町田駅から</p>
+      <strong>徒歩 4分</strong>
+    </div>
+  </div>
+</section>
+
+<!-- STRENGTHS -->
+<section id="strengths">
+  <div class="strength-item">
+    <div class="strength-num">49</div>
+    <div class="strength-label">SEATS</div>
+    <div class="strength-desc">ゆったりソファ席完備<br>女子会・グループにも</div>
+  </div>
+  <div class="strength-item">
+    <div class="strength-num">Wi<span style="font-size:28px">-Fi</span></div>
+    <div class="strength-label">FREE WIFI</div>
+    <div class="strength-desc">全席Wi-Fi完備<br>長居しやすい空間</div>
+  </div>
+  <div class="strength-item">
+    <div class="strength-num">11<span style="font-size:28px">:00</span></div>
+    <div class="strength-label">OPEN</div>
+    <div class="strength-desc">ランチからディナーまで<br>22:30まで営業</div>
+  </div>
+  <div class="strength-item">
+    <div class="strength-num">🎂</div>
+    <div class="strength-label">BIRTHDAY</div>
+    <div class="strength-desc">サプライズ対応OK<br>メッセージプレートあり</div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-header">
+    <p class="section-eyebrow">OUR MENU</p>
+    <h2 class="section-title">こだわりの<em>一皿</em>たち</h2>
+    <p class="section-sub">素材にこだわったもちもち生パスタ、季節のパフェ、手作りケーキ</p>
+  </div>
+
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&auto=format&fit=crop&q=80"
+          alt="もちもち生パスタ"
+          class="menu-img"
+        >
+        <div class="menu-overlay"><span class="menu-overlay-text">Pasta</span></div>
+      </div>
+      <div class="menu-info">
+        <p class="menu-category">SIGNATURE PASTA</p>
+        <h3 class="menu-name">もちもち生パスタ</h3>
+        <p class="menu-desc">セピアカフェ自慢の逸品。海老みそパスタ、イカ明太子パスタなど種類豊富。テイクアウトも人気。</p>
+        <p class="menu-price">¥ 880 〜</p>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&auto=format&fit=crop&q=80"
+          alt="季節のパフェ"
+          class="menu-img"
+        >
+        <div class="menu-overlay"><span class="menu-overlay-text">Parfait</span></div>
+      </div>
+      <div class="menu-info">
+        <p class="menu-category">SEASONAL PARFAIT</p>
+        <h3 class="menu-name">季節のパフェ</h3>
+        <p class="menu-desc">動物モチーフの可愛いパフェや渋皮栗のモンブランなど、目でも舌でも楽しめる季節限定の一品。</p>
+        <p class="menu-price">¥ 680 〜</p>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&auto=format&fit=crop&q=80"
+          alt="手作りケーキ"
+          class="menu-img"
+        >
+        <div class="menu-overlay"><span class="menu-overlay-text">Cake</span></div>
+      </div>
+      <div class="menu-info">
+        <p class="menu-category">HANDMADE CAKE</p>
+        <h3 class="menu-name">手作りケーキ</h3>
+        <p class="menu-desc">シフォンケーキ、ガトーショコラなど毎日手作り。ケーキセットはコーヒーと一緒にぜひ。</p>
+        <p class="menu-price">¥ 580 〜</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<section id="concept">
+  <div class="concept-img-wrap">
+    <img
+      src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=700&auto=format&fit=crop&q=80"
+      alt="セピアカフェの空間"
+      class="concept-main-img"
+    >
+    <img
+      src="https://images.unsplash.com/photo-1510074968891-b7901c85e8a3?w=400&auto=format&fit=crop&q=80"
+      alt="コーヒー"
+      class="concept-accent-img"
+    >
+  </div>
+  <div class="concept-text">
+    <div class="section-header" style="text-align:left; margin-bottom:32px;">
+      <p class="section-eyebrow">OUR CONCEPT</p>
+      <h2 class="section-title">居心地のいい<br><em>隠れ家</em>カフェ</h2>
+    </div>
+    <p class="concept-body">
+      町田駅から4分。繁華街の一角にある、ちょっと特別な隠れ家空間。<br><br>
+      開放感あふれる明るい店内と、ゆったりと座れるソファ席。<br>
+      女子会、デート、誕生日のサプライズ、ひとりのご褒美タイムまで。<br><br>
+      どんなシーンにも寄り添える、そんなカフェであり続けたい。
+    </p>
+    <div class="concept-tags">
+      <span class="concept-tag">女子会に最適</span>
+      <span class="concept-tag">デート向け</span>
+      <span class="concept-tag">誕生日サプライズ</span>
+      <span class="concept-tag">ソファ席あり</span>
+      <span class="concept-tag">Wi-Fi完備</span>
+      <span class="concept-tag">テイクアウト可</span>
+      <span class="concept-tag">飲み放題あり</span>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE -->
+<section id="voice">
+  <div class="section-header">
+    <p class="section-eyebrow">CUSTOMER VOICE</p>
+    <h2 class="section-title">来店者の<em>声</em></h2>
+    <p class="section-sub">実際にご来店いただいたお客様の感想</p>
+  </div>
+  <div class="voice-grid">
+    <div class="voice-card">
+      <div class="voice-quote">"</div>
+      <p class="voice-text">もちもちの生パスタが絶品！海老みそパスタはコクがあって大好き。ソファ席でゆっくりできるから女子会に毎回使ってます。</p>
+      <div class="voice-author">
+        <div class="voice-avatar">A</div>
+        <div>
+          <div class="voice-name">20代 女性</div>
+          <div class="voice-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-quote">"</div>
+      <p class="voice-text">誕生日にサプライズプレートをお願いしたら、すごく可愛くしてくれた！友達の反応が最高でした。また絶対来ます。</p>
+      <div class="voice-author">
+        <div class="voice-avatar">M</div>
+        <div>
+          <div class="voice-name">20代 女性</div>
+          <div class="voice-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-quote">"</div>
+      <p class="voice-text">ランチのパスタセット、コスパが良すぎる。サラダもドリンクも付いて980円は神。Wi-Fiも使えるし仕事でもよく来ます。</p>
+      <div class="voice-author">
+        <div class="voice-avatar">K</div>
+        <div>
+          <div class="voice-name">30代 男性</div>
+          <div class="voice-stars">★★★★☆</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE -->
+<section id="scene">
+  <div class="section-header">
+    <p class="section-eyebrow">SCENE</p>
+    <h2 class="section-title">どんな<em>シーン</em>にも</h2>
+    <p class="section-sub">女子会・デート・誕生日・ひとりカフェ</p>
+  </div>
+  <div class="scene-grid">
+    <div class="scene-item main">
+      <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop&q=80" alt="カフェ空間" class="scene-img">
+      <div class="scene-label">CAFE SPACE · 開放的な店内</div>
+    </div>
+    <div class="scene-item">
+      <img src="https://images.unsplash.com/photo-1543168256-418811576931?w=500&auto=format&fit=crop&q=80" alt="女子会" class="scene-img">
+      <div class="scene-label">GIRLS PARTY · 女子会</div>
+    </div>
+    <div class="scene-item">
+      <img src="https://images.unsplash.com/photo-1517705008128-361805f42e86?w=500&auto=format&fit=crop&q=80" alt="デート" class="scene-img">
+      <div class="scene-label">DATE · デート</div>
+    </div>
+    <div class="scene-item">
+      <img src="https://images.unsplash.com/photo-1464349153735-7db50ed83c84?w=500&auto=format&fit=crop&q=80" alt="誕生日" class="scene-img">
+      <div class="scene-label">BIRTHDAY · 誕生日</div>
+    </div>
+    <div class="scene-item">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&auto=format&fit=crop&q=80" alt="ひとりカフェ" class="scene-img" style="object-position: center 30%;">
+      <div class="scene-label">SOLO CAFE · ひとりの時間</div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section id="access">
+  <div class="access-info">
+    <p class="access-eyebrow">ACCESS</p>
+    <h2>アクセス<em> &</em><br>店舗情報</h2>
+    <table class="access-table">
+      <tr>
+        <td>住所</td>
+        <td>東京都町田市原町田4-4-5<br>平野屋第3ビル</td>
+      </tr>
+      <tr>
+        <td>アクセス</td>
+        <td>小田急線・JR横浜線<br>町田駅より徒歩4分</td>
+      </tr>
+      <tr>
+        <td>電話</td>
+        <td>042-722-0474</td>
+      </tr>
+      <tr>
+        <td>営業時間</td>
+        <td>11:00 〜 22:30<br>（料理LO 21:50）</td>
+      </tr>
+      <tr>
+        <td>定休日</td>
+        <td>年中無休</td>
+      </tr>
+      <tr>
+        <td>席数</td>
+        <td>49席（ソファ席あり）</td>
+      </tr>
+      <tr>
+        <td>駐車場</td>
+        <td>なし（近隣にコインパーキングあり）</td>
+      </tr>
+      <tr>
+        <td>支払い</td>
+        <td>VISA / Master / AMEX / JCB</td>
+      </tr>
+    </table>
+    <div class="access-note">
+      <p>🚉 小田急線・JR町田駅どちらからも徒歩4分とアクセス便利。駐車場はございませんが、周辺にコインパーキングが複数ございます。</p>
+    </div>
+  </div>
+  <div>
+    <div class="map-wrap">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3247.3567!2d139.44621!3d35.54503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018fbd5daa31451%3A0x4a5555c4dcdf7f60!2z44K744s944Ki44Kr44OV44FK!5e0!3m2!1sja!2sjp!4v1"
+        allowfullscreen=""
+        loading="lazy"
+        title="セピアカフェ Google Map"
+      ></iframe>
+    </div>
+    <a href="https://maps.google.com/?q=東京都町田市原町田4-4-5" target="_blank" class="map-btn">
+      Google マップで開く →
+    </a>
+  </div>
+</section>
+
+<!-- RESERVE -->
+<section id="reserve">
+  <div class="section-header">
+    <p class="section-eyebrow">RESERVATION</p>
+    <h2 class="section-title">ご予約・<em>お問い合わせ</em></h2>
+    <p class="section-sub">女子会・誕生日・記念日のご予約はこちらから。前日までのご連絡でサプライズプレートもご用意いたします。</p>
+  </div>
+
+  <div class="form-wrap">
+    <form action="https://formspree.io/f/xeenzveo" method="POST" id="reserveForm">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">お名前 <span class="form-required">必須</span></label>
+          <input type="text" id="name" name="name" placeholder="田村 大樹" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">電話番号 <span class="form-required">必須</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="090-0000-0000" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="date">ご希望日時 <span class="form-required">必須</span></label>
+          <input type="datetime-local" id="date" name="date" required>
+        </div>
+        <div class="form-group">
+          <label for="guests">人数 <span class="form-required">必須</span></label>
+          <select id="guests" name="guests" required>
+            <option value="">選択してください</option>
+            <option value="1名">1名</option>
+            <option value="2名">2名</option>
+            <option value="3名">3名</option>
+            <option value="4名">4名</option>
+            <option value="5名">5名</option>
+            <option value="6名以上">6名以上</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="course">ご利用シーン</label>
+        <select id="course" name="course">
+          <option value="">選択してください（任意）</option>
+          <option value="ランチ">ランチ</option>
+          <option value="ディナー">ディナー</option>
+          <option value="女子会">女子会</option>
+          <option value="誕生日・記念日">誕生日・記念日</option>
+          <option value="デート">デート</option>
+          <option value="その他">その他</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="message">ご要望・アレルギーなど</label>
+        <textarea id="message" name="message" rows="4" placeholder="誕生日サプライズをお願いしたい、アレルギーがある など、何でもお気軽にどうぞ。"></textarea>
+      </div>
+
+      <input type="hidden" name="_subject" value="【セピアカフェ】新しいご予約が届きました">
+      <input type="hidden" name="_next" value="">
+
+      <button type="submit" class="form-submit" id="submitBtn">
+        予約リクエストを送る
+      </button>
+
+      <p class="form-note">送信後、確認のご連絡をお電話にてさせていただきます。</p>
+    </form>
+
+    <div class="form-success" id="formSuccess">
+      <div class="form-success-icon">✓</div>
+      <h3>送信が完了しました</h3>
+      <p>ご予約リクエストありがとうございます。<br>確認のご連絡をお電話にてさせていただきます。</p>
+    </div>
+  </div>
+
+  <div class="reserve-tel">
+    <p>お電話でのご予約はこちら</p>
+    <a href="tel:042-722-0474">042-722-0474</a>
+    <span>営業時間内（11:00〜22:00）</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">SEPIA <em>Cafe</em></div>
+      <p class="footer-tagline">町田駅徒歩4分 · 11:00-22:30 · 年中無休</p>
+    </div>
+    <div class="footer-nav">
+      <div class="footer-nav-col">
+        <h4>MENU</h4>
+        <ul>
+          <li><a href="#menu">パスタ</a></li>
+          <li><a href="#menu">パフェ</a></li>
+          <li><a href="#menu">ケーキ</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav-col">
+        <h4>INFO</h4>
+        <ul>
+          <li><a href="#concept">コンセプト</a></li>
+          <li><a href="#access">アクセス</a></li>
+          <li><a href="#reserve">ご予約</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav-col">
+        <h4>CONTACT</h4>
+        <ul>
+          <li><a href="tel:042-722-0474">042-722-0474</a></li>
+          <li><a href="https://www.hotpepper.jp/strJ000025454/" target="_blank">ホットペッパー</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 SEPIA CAFE All rights reserved.</p>
+    <div class="footer-sns">
+      <a href="#">Instagram</a>
+      <a href="#">Twitter</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+<script>
+  const form = document.getElementById('reserveForm');
+  const success = document.getElementById('formSuccess');
+  const btn = document.getElementById('submitBtn');
+
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.textContent = '送信中...';
+
+      const data = new FormData(form);
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+        } else {
+          btn.disabled = false;
+          btn.textContent = '予約リクエストを送る';
+          alert('送信に失敗しました。お電話にてご予約ください。');
+        }
+      } catch {
+        btn.disabled = false;
+        btn.textContent = '予約リクエストを送る';
+        alert('送信に失敗しました。お電話にてご予約ください。');
+      }
+    });
+  }
+</script>
+</html>
